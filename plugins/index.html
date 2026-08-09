@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plugins — FreeSkills</title>
+    <meta
+      name="description"
+      content="Browse FreeSkills plugins for Cursor, Claude Code, and Codex. Currently available: SDD (Spec-Driven Development)."
+    />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <nav class="topnav" aria-label="Primary">
+          <a href="../#install">Install</a>
+          <a href="./" aria-current="page">Plugins</a>
+          <a href="../#update">Update</a>
+          <a
+            class="topnav__repo"
+            href="https://github.com/freeskills/marketplace"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Marketplace repo</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+          <p class="eyebrow">Catalog</p>
+          <h1>Plugins &amp; skills</h1>
+          <p class="section__lede">
+            Everything published in the FreeSkills marketplace. Add the marketplace
+            once, then install plugins from Cursor, Claude Code, or Codex.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="catalog">
+          <a class="catalog-item" href="sdd/">
+            <div class="catalog-item__top">
+              <p class="plugin__id">sdd</p>
+              <span class="status status--live">Available</span>
+            </div>
+            <h2>Spec-Driven Development</h2>
+            <p>
+              Architecture-first AI engineering with living <code>.specs/</code>,
+              ADRs, and protocol commands for the full build cycle.
+            </p>
+            <ul class="plugin__tags">
+              <li>Architecture</li>
+              <li>Specs</li>
+              <li>AI workflow</li>
+            </ul>
+            <span class="catalog-item__cta">View details</span>
+          </a>
+        </div>
+
+        <p class="catalog-note">
+          More plugins will land here as the marketplace grows. Refresh your
+          marketplace catalog after new releases.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="../">Home</a>
+        ·
+        <a href="https://github.com/freeskills/marketplace">Marketplace</a>
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>Copied</div>
+    <script src="../app.js"></script>
+  </body>
+</html>

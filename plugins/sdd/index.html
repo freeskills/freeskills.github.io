@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SDD — Spec-Driven Development · FreeSkills</title>
+    <meta
+      name="description"
+      content="Install SDD from FreeSkills: Spec-Driven Development for Cursor, Claude Code, and Codex — living .specs/, ADRs, and protocol commands."
+    />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <nav class="topnav" aria-label="Primary">
+          <a href="../../#install">Install</a>
+          <a href="../">Plugins</a>
+          <a href="../../#update">Update</a>
+          <a
+            class="topnav__repo"
+            href="https://github.com/freeskills/marketplace"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Marketplace repo</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+          <p class="crumb">
+            <a href="../">Plugins</a>
+            <span aria-hidden="true">/</span>
+            <span>sdd</span>
+          </p>
+          <p class="plugin__id">sdd · v1.0.6</p>
+          <h1>Spec-Driven Development</h1>
+          <p class="section__lede">
+            Architecture-first engineering for AI assistants. Keep project knowledge
+            in <code>.specs/</code>, decide with ADRs, and run protocol commands from
+            init through finish.
+          </p>
+          <ul class="plugin__tags">
+            <li>Architecture</li>
+            <li>Specs</li>
+            <li>AI workflow</li>
+            <li>Auth defaults</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="detail-grid">
+          <div class="detail-main">
+            <h2>What you get</h2>
+            <ul class="detail-list">
+              <li>Living project knowledge: DNA, vision, architecture, modules, ADRs, tasks</li>
+              <li>Command cycle: init → new → plan → start → finish</li>
+              <li>Quality gates: status, doctor, sync, review</li>
+              <li>Opinionated defaults for modules, Inbox/Outbox, migrations</li>
+              <li>
+                Auth split: app frontends use HttpOnly/Secure/SameSite cookies (or BFF);
+                direct API clients may use Bearer, API keys, mTLS, etc.
+              </li>
+            </ul>
+
+            <h2>Commands</h2>
+            <div class="cmd-table">
+              <div>
+                <h3>Claude</h3>
+                <p>
+                  <code>/sdd:init</code> · <code>/sdd:new</code> · <code>/sdd:plan</code> ·
+                  <code>/sdd:start</code> · <code>/sdd:finish</code> ·
+                  <code>/sdd:status</code> · <code>/sdd:doctor</code> ·
+                  <code>/sdd:sync</code> · <code>/sdd:review</code> ·
+                  <code>/sdd:update</code> · <code>/sdd:overview</code>
+                </p>
+              </div>
+              <div>
+                <h3>Cursor</h3>
+                <p>
+                  <code>/sdd-init</code> · <code>/sdd-new</code> · <code>/sdd-plan</code> ·
+                  <code>/sdd-start</code> · <code>/sdd-finish</code> ·
+                  <code>/sdd-status</code> · <code>/sdd-doctor</code> ·
+                  <code>/sdd-sync</code> · <code>/sdd-review</code> ·
+                  <code>/sdd-update</code> · <code>/sdd-overview</code>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="detail-aside">
+            <h2>Install</h2>
+            <p class="detail-aside__note">
+              Marketplace required first:
+              <a href="../../#install">add FreeSkills</a>
+            </p>
+
+            <p class="plugin__install-label">Claude</p>
+            <div class="copy-block" data-copy="/plugin install sdd@freeskills">
+              <pre><code>/plugin install sdd@freeskills</code></pre>
+              <button type="button" class="copy-btn">Copy</button>
+            </div>
+
+            <p class="plugin__install-label">Cursor</p>
+            <p class="plugin__plain">
+              Customize → install <strong>sdd</strong> from the FreeSkills marketplace.
+            </p>
+
+            <p class="plugin__install-label">Codex</p>
+            <p class="plugin__plain">
+              Plugins → FreeSkills → install <strong>sdd</strong>
+            </p>
+
+            <p class="plugin__install-label">Update (Claude)</p>
+            <div class="copy-block" data-copy="/plugin update sdd@freeskills">
+              <pre><code>/plugin update sdd@freeskills</code></pre>
+              <button type="button" class="copy-btn">Copy</button>
+            </div>
+
+            <a
+              class="text-link"
+              href="https://github.com/freeskills/marketplace/tree/main/plugins/sdd"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Source on GitHub</a
+            >
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="../">All plugins</a>
+        ·
+        <a href="../../">Home</a>
+        ·
+        <a href="https://github.com/freeskills/marketplace/tree/main/plugins/sdd">GitHub</a>
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>Copied</div>
+    <script src="../../app.js"></script>
+  </body>
+</html>
