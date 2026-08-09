@@ -2,7 +2,8 @@
 
 Public website for the [FreeSkills marketplace](https://github.com/freeskills/marketplace) — install the marketplace, install plugins, and keep them updated on **Cursor**, **Claude Code**, and **Codex**.
 
-**Repo:** [freeskills/freeskills](https://github.com/freeskills/freeskills)  
+**Site:** [https://freeskills.github.io](https://freeskills.github.io)  
+**Repo:** [freeskills/freeskills.github.io](https://github.com/freeskills/freeskills.github.io)  
 **Marketplace:** [freeskills/marketplace](https://github.com/freeskills/marketplace)
 
 ## Local preview
@@ -13,15 +14,15 @@ Open `index.html` in a browser, or serve the folder:
 npx --yes serve .
 ```
 
-## GitHub Pages
+## GitHub Pages (org root)
 
-1. Push this repository to `freeskills/freeskills`.
-2. GitHub → **Settings** → **Pages**.
-3. Source: **Deploy from a branch**.
-4. Branch: `main` / folder: `/ (root)`.
-5. Site URL will be `https://freeskills.github.io/freeskills/` (or your custom domain).
+GitHub only serves `https://freeskills.github.io` from a repository named **`freeskills.github.io`**.
 
-If the site is published under a project path (`/freeskills/`), asset paths in this repo already use relative URLs (`styles.css`, `app.js`) so they work without a base-href change.
+1. If this code still lives in `freeskills/freeskills`, rename the repo to `freeskills.github.io` (GitHub → Settings → General → Repository name).
+2. Settings → **Pages** → Deploy from branch → `main` / `/ (root)`.
+3. The site will be at **https://freeskills.github.io** (not `/freeskills/`).
+
+Asset paths are relative, so they work at the domain root.
 
 ## Contents
 
