@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>6. Specification Driven Development · Guia para Iniciantes · FreeSkills</title>
+    <meta name="description" content="Especificar a área administrativa da Marina antes de a IA sair implementando." />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles.css" />
+  </head>
+  <body
+    class="page-guide"
+    data-guide-page="sdd"
+    data-i18n-page="guide-sdd-modulo"
+  >
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="../../plugins/">Plugins</a>
+            <a class="topnav__guide" href="../" aria-current="page">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+                    <p class="crumb">
+            <a href="../">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <span>
+              <span data-lang="en-US">6. Specification Driven Development</span>
+              <span data-lang="pt-BR">6. Specification Driven Development</span>
+            </span>
+          </p>
+          <p class="eyebrow">
+            <span data-lang="en-US">Module 6</span>
+            <span data-lang="pt-BR">Módulo 6</span>
+          </p>
+          <h1>
+            <span data-lang="en-US">Specification Driven Development</span>
+            <span data-lang="pt-BR">Specification Driven Development</span>
+          </h1>
+          <p class="section__lede">
+            <span data-lang="en-US">An admin area is easy to mess up. Spec first, then one slice of code.</span>
+            <span data-lang="pt-BR">Área administrativa é fácil de estragar. Spec primeiro, depois uma fatia de código.</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="guide-layout">
+          <aside class="guide-aside" data-guide-nav></aside>
+          <div class="guide-main">
+            <article class="guide-article" data-lang="pt-BR">
+              <p>
+                Skills aceleram o jeito. SDD segura o produto. Cadastrar imóvel no JSON pelo chat não escala: a Marina precisa de uma área administrativa. Pedir “faz um admin” num prompt solto vira CRM, login social e tela que ninguém combinou.
+              </p>
+              <p>
+                Você instala o plugin SDD do FreeSkills, escreve o DNA do site da corretora, especifica o admin e só então implementa uma fatia. O guia termina aqui. O site da Marina continua.
+              </p>              <h2>O que você vai aprender</h2>              <ul>
+                <li>O que SDD muda no ciclo que você já usa.</li>
+                <li>Como instalar o plugin.</li>
+                <li>DNA: quem usa e o que o produto não é.</li>
+                <li>Spec da área administrativa e implementação com Definition of Done.</li>
+              </ul>
+              <h2>Conteúdos deste módulo</h2>
+            </article>
+            <article class="guide-article" data-lang="en-US">
+              <p>
+                Skills speed up the how. SDD holds the product. Adding a listing to the JSON in chat does not scale: Marina needs an admin area. Asking for “an admin” in a loose prompt becomes a CRM, social login, and a screen nobody agreed on.
+              </p>
+              <p>
+                You install the FreeSkills SDD plugin, write the realtor site’s DNA, specify the admin, and only then implement one slice. The guide ends here. Marina’s site keeps going.
+              </p>              <h2>What you will learn</h2>              <ul>
+                <li>What SDD changes in the loop you already use.</li>
+                <li>How to install the plugin.</li>
+                <li>DNA: who uses it and what the product is not.</li>
+                <li>The admin-area spec and an implement with Definition of Done.</li>
+              </ul>
+              <h2>Lessons in this module</h2>
+            </article>
+                        <ol class="guide-lessons" data-guide-lessons></ol>
+            <p>
+              <a class="btn btn--primary" href="o-que-e-sdd/">
+                <span data-lang="en-US">Start with what SDD is</span>
+                <span data-lang="pt-BR">Começar pelo que é SDD</span>
+              </a>
+            </p>
+            <nav
+              class="guide-pager"
+              data-guide-pager
+              aria-label="Guide pagination"
+            ></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="./"
+          ><span data-lang="en-US">Module index</span
+          ><span data-lang="pt-BR">Índice do módulo</span></a
+        >
+        ·
+        <a href="../"
+          ><span data-lang="en-US">Beginner's Guide</span
+          ><span data-lang="pt-BR">Guia para Iniciantes</span></a
+        >
+        ·
+        <a href="../../"
+          ><span data-lang="en-US">Home</span
+          ><span data-lang="pt-BR">Início</span></a
+        >
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../../i18n.js"></script>
+    <script src="../../app.js?v=donation-4"></script>
+    <script src="../guia.js"></script>
+  </body>
+</html>

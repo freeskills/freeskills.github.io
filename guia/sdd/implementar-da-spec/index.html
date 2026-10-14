@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Implementar a partir da spec · Guia para Iniciantes · FreeSkills</title>
+    <meta name="description" content="Uma fatia, revisão no navegador, Definition of Done. O guia fecha aqui." />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../styles.css" />
+  </head>
+  <body
+    class="page-guide"
+    data-guide-page="sdd/implementar-da-spec"
+    data-i18n-page="guide-implementar-spec"
+  >
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../../../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../../../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="../../../plugins/">Plugins</a>
+            <a class="topnav__guide" href="../../" aria-current="page">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../../../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+                    <p class="crumb">
+            <a href="../../">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <a href="../">
+              <span data-lang="en-US">6. Specification Driven Development</span>
+              <span data-lang="pt-BR">6. Specification Driven Development</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <span>
+              <span data-lang="en-US">Implement from spec</span>
+              <span data-lang="pt-BR">Implementar da spec</span>
+            </span>
+          </p>
+          <p class="eyebrow">6.5</p>
+          <h1>
+            <span data-lang="en-US">Implement from the spec</span>
+            <span data-lang="pt-BR">Implementar a partir da spec</span>
+          </h1>
+          <p class="section__lede">
+            <span data-lang="en-US">The loop you learned in module 1, now with a spec on the table.</span>
+            <span data-lang="pt-BR">O ciclo do módulo 1, agora com a spec na mesa.</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="guide-layout">
+          <aside class="guide-aside" data-guide-nav></aside>
+          <div class="guide-main">
+            <article class="guide-article" data-lang="pt-BR">
+              <h2>Introdução</h2>
+
+              <p>
+                A IA implementa o que está escrito. Você testa o que a spec chamou de Done. Se o visual sair do sistema, a Skill puxa de volta. Se nascer um CRM, a spec e o DNA puxam de volta.
+              </p>
+
+              <h2>O que você vai aprender</h2>
+
+              <ul>
+                <li>Pedir implementação sem alargar o escopo.</li>
+                <li>Três testes manuais (senha errada, cadastrar, remover).</li>
+                <li>O que fazer depois que o guia acaba: o site da Marina continua.</li>
+              </ul>
+
+              <h2>Por que isso importa</h2>
+
+              <p>
+                Done não é “a IA disse que acabou”. Done é a Marina cadastrar um apto no admin e ele aparecer no catálogo público.
+              </p>
+
+              <h2>Pedido</h2>              <div class="guide-example">
+                <p class="guide-example__label">Prompt</p>
+                <div class="copy-block" data-copy="Spec &quot;Área administrativa de imóveis&quot; aprovada. Skill marina-imovel (só visual) + DNA no repo.&#10;&#10;Implemente SÓ o que a spec pede:&#10;&#10;- /admin com senha simples (erro visível se errar).&#10;- Lista, cadastro, edição e remoção de imóveis.&#10;- Persistir no data/imoveis.json (ou o mecanismo que a spec definiu).&#10;- O catálogo público atualiza depois de gravar.&#10;- Nada de CRM, nada de pedido de visita, nada de novo framework neste recorte.&#10;&#10;Antes de editar: liste os arquivos. Depois pare para eu testar:&#10;1) senha errada&#10;2) cadastrar um apto e ver no catálogo&#10;3) remover e confirmar que sumiu&#10;Definition of Done = esses três testes no navegador.">
+                  <pre><code>Spec &quot;Área administrativa de imóveis&quot; aprovada. Skill marina-imovel (só visual) + DNA no repo.
+
+Implemente SÓ o que a spec pede:
+
+- /admin com senha simples (erro visível se errar).
+- Lista, cadastro, edição e remoção de imóveis.
+- Persistir no data/imoveis.json (ou o mecanismo que a spec definiu).
+- O catálogo público atualiza depois de gravar.
+- Nada de CRM, nada de pedido de visita, nada de novo framework neste recorte.
+
+Antes de editar: liste os arquivos. Depois pare para eu testar:
+1) senha errada
+2) cadastrar um apto e ver no catálogo
+3) remover e confirmar que sumiu
+Definition of Done = esses três testes no navegador.</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+              </div>              <h2>O guia fecha. O produto não</h2>              <p>
+                Você foi da pasta vazia à área administrativa especificada. A Marina cadastra estoque nela, não no chat. O método é o mesmo: entender, spec quando a feature tiver mais de um ator, Skill para o jeito, fatia, navegador, publicar de novo (compartilhada ou VPS com Beway).
+              </p>              <div class="guide-callout">
+                <p>
+                  Se quiser um próximo passo natural: republicar o admin no mesmo domínio (VPS + Beway, se já estiver nesse caminho) e cadastrar um apto de verdade pelo painel.
+                </p>
+              </div>
+
+              <h2>Checklist</h2>
+
+              <ul>
+                <li>Senha errada não entra e mostra erro.</li>
+                <li>Cadastro válido aparece no admin e no catálogo público.</li>
+                <li>Remover some dos dois. Nada fora da spec entrou no código.</li>
+              </ul>
+
+              <h2>Próximo passo</h2>
+
+              <p>
+                Fim do guia. Continue no mesmo repo. A próxima feature da Marina começa no DNA, não num prompt “faz o resto”.
+              </p>
+            </article>
+            <article class="guide-article" data-lang="en-US">
+              <h2>Introduction</h2>
+
+              <p>
+                The AI implements what is written. You test what the spec called Done. If the look leaves the system, the Skill pulls it back. If a CRM appears, the spec and the DNA pull it back.
+              </p>
+
+              <h2>What you will learn</h2>
+
+              <ul>
+                <li>Ask for an implement without widening the scope.</li>
+                <li>Three manual tests (wrong password, add, remove).</li>
+                <li>What to do after the guide ends: Marina’s site keeps going.</li>
+              </ul>
+
+              <h2>Why this matters</h2>
+
+              <p>
+                Done is not “the AI said it is finished”. Done is Marina adding an apt in the admin and seeing it on the public catalog.
+              </p>
+
+              <h2>The ask</h2>              <div class="guide-example">
+                <p class="guide-example__label">Prompt</p>
+                <div class="copy-block" data-copy="Spec &quot;Área administrativa de imóveis&quot; aprovada. Skill marina-imovel (só visual) + DNA no repo.&#10;&#10;Implemente SÓ o que a spec pede:&#10;&#10;- /admin com senha simples (erro visível se errar).&#10;- Lista, cadastro, edição e remoção de imóveis.&#10;- Persistir no data/imoveis.json (ou o mecanismo que a spec definiu).&#10;- O catálogo público atualiza depois de gravar.&#10;- Nada de CRM, nada de pedido de visita, nada de novo framework neste recorte.&#10;&#10;Antes de editar: liste os arquivos. Depois pare para eu testar:&#10;1) senha errada&#10;2) cadastrar um apto e ver no catálogo&#10;3) remover e confirmar que sumiu&#10;Definition of Done = esses três testes no navegador.">
+                  <pre><code>Spec &quot;Área administrativa de imóveis&quot; aprovada. Skill marina-imovel (só visual) + DNA no repo.
+
+Implemente SÓ o que a spec pede:
+
+- /admin com senha simples (erro visível se errar).
+- Lista, cadastro, edição e remoção de imóveis.
+- Persistir no data/imoveis.json (ou o mecanismo que a spec definiu).
+- O catálogo público atualiza depois de gravar.
+- Nada de CRM, nada de pedido de visita, nada de novo framework neste recorte.
+
+Antes de editar: liste os arquivos. Depois pare para eu testar:
+1) senha errada
+2) cadastrar um apto e ver no catálogo
+3) remover e confirmar que sumiu
+Definition of Done = esses três testes no navegador.</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+              </div>              <h2>The guide ends. The product does not</h2>              <p>
+                You went from an empty folder to a specified admin area. Marina adds inventory there, not in chat. The method stays: understand, spec when the feature has more than one actor, Skill for the way, a slice, the browser, publish again (shared hosting or a VPS with Beway).
+              </p>              <div class="guide-callout">
+                <p>
+                  A natural next step: republish the admin on the same domain (VPS + Beway, if you are already on that path) and add a real apt from the panel.
+                </p>
+              </div>
+
+              <h2>Checklist</h2>
+
+              <ul>
+                <li>A wrong password does not get in and shows an error.</li>
+                <li>A valid add shows in the admin and on the public catalog.</li>
+                <li>Remove clears both. Nothing outside the spec landed in the code.</li>
+              </ul>
+
+              <h2>Next step</h2>
+
+              <p>
+                End of the guide. Stay in the same repo. Marina’s next feature starts in the DNA, not in a “build the rest” prompt.
+              </p>
+            </article>
+            
+            <nav
+              class="guide-pager"
+              data-guide-pager
+              aria-label="Guide pagination"
+            ></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="../"
+          ><span data-lang="en-US">Module index</span
+          ><span data-lang="pt-BR">Índice do módulo</span></a
+        >
+        ·
+        <a href="../../"
+          ><span data-lang="en-US">Beginner's Guide</span
+          ><span data-lang="pt-BR">Guia para Iniciantes</span></a
+        >
+        ·
+        <a href="../../../"
+          ><span data-lang="en-US">Home</span
+          ><span data-lang="pt-BR">Início</span></a
+        >
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../../../i18n.js"></script>
+    <script src="../../../app.js?v=donation-4"></script>
+    <script src="../../guia.js"></script>
+  </body>
+</html>

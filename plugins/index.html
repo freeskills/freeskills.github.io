@@ -1,9 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Plugins — FreeSkills</title>
+    <title>Plugins · FreeSkills</title>
     <meta
       name="description"
       content="Browse FreeSkills plugins for Cursor, Claude Code, and Codex. Currently available: SDD (Spec-Driven Development)."
@@ -17,8 +50,11 @@
     />
     <link rel="stylesheet" href="../styles.css" />
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body data-i18n-page="plugins">
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
 
     <header class="topbar is-solid">
       <div class="topbar__inner">
@@ -26,29 +62,58 @@
           <span class="brand-mark__dot" aria-hidden="true"></span>
           FreeSkills
         </a>
-        <nav class="topnav" aria-label="Primary">
-          <a href="../#install">Install</a>
-          <a href="./" aria-current="page">Plugins</a>
-          <a href="../#update">Update</a>
-          <a
-            class="topnav__repo"
-            href="https://github.com/freeskills/marketplace"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Marketplace repo</a
-          >
-        </nav>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="./" aria-current="page">Plugins</a>
+            <a class="topnav__guide" href="../guia/">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
       </div>
     </header>
 
     <main id="main">
       <section class="page-banner">
         <div class="page-banner__inner">
-          <p class="eyebrow">Catalog</p>
-          <h1>Plugins &amp; skills</h1>
+          <p class="eyebrow">
+            <span data-lang="en-US">Catalog</span>
+            <span data-lang="pt-BR">Catálogo</span>
+          </p>
+          <h1>
+            <span data-lang="en-US">Plugins &amp; skills</span>
+            <span data-lang="pt-BR">Plugins e skills</span>
+          </h1>
           <p class="section__lede">
-            Everything published in the FreeSkills marketplace. Add the marketplace
-            once, then install plugins from Cursor, Claude Code, or Codex.
+            <span data-lang="en-US">
+              Everything published in the FreeSkills marketplace. Add the
+              marketplace once, then install plugins from Cursor, Claude Code,
+              or Codex.
+            </span>
+            <span data-lang="pt-BR">
+              Tudo o que está publicado no marketplace FreeSkills. Adicione o
+              marketplace uma vez e instale plugins no Cursor, Claude Code ou
+              Codex.
+            </span>
           </p>
         </div>
       </section>
@@ -58,25 +123,51 @@
           <a class="catalog-item" href="sdd/">
             <div class="catalog-item__top">
               <p class="plugin__id">sdd</p>
-              <span class="status status--live">Available</span>
+              <span class="status status--live">
+                <span data-lang="en-US">Available</span>
+                <span data-lang="pt-BR">Disponível</span>
+              </span>
             </div>
             <h2>Spec-Driven Development</h2>
             <p>
-              Architecture-first AI engineering with living <code>.specs/</code>,
-              ADRs, and protocol commands for the full build cycle.
+              <span data-lang="en-US">
+                Architecture-first AI engineering with living
+                <code>.specs/</code>, ADRs, and protocol commands for the full
+                build cycle.
+              </span>
+              <span data-lang="pt-BR">
+                Engenharia de IA com arquitetura em primeiro lugar,
+                <code>.specs/</code>
+                vivos, ADRs e comandos de protocolo para o ciclo completo.
+              </span>
             </p>
             <ul class="plugin__tags">
-              <li>Architecture</li>
+              <li>
+                <span data-lang="en-US">Architecture</span>
+                <span data-lang="pt-BR">Arquitetura</span>
+              </li>
               <li>Specs</li>
-              <li>AI workflow</li>
+              <li>
+                <span data-lang="en-US">AI workflow</span>
+                <span data-lang="pt-BR">Fluxo com IA</span>
+              </li>
             </ul>
-            <span class="catalog-item__cta">View details</span>
+            <span class="catalog-item__cta">
+              <span data-lang="en-US">View details</span>
+              <span data-lang="pt-BR">Ver detalhes</span>
+            </span>
           </a>
         </div>
 
         <p class="catalog-note">
-          More plugins will land here as the marketplace grows. Refresh your
-          marketplace catalog after new releases.
+          <span data-lang="en-US">
+            More plugins will land here as the marketplace grows. Refresh your
+            marketplace catalog after new releases.
+          </span>
+          <span data-lang="pt-BR">
+            Mais plugins entram aqui conforme o marketplace cresce. Atualize o
+            catálogo depois de cada lançamento.
+          </span>
         </p>
       </section>
     </main>
@@ -84,13 +175,24 @@
     <footer class="footer">
       <div class="footer__brand">FreeSkills</div>
       <p>
-        <a href="../">Home</a>
+        <a href="../">
+          <span data-lang="en-US">Home</span>
+          <span data-lang="pt-BR">Início</span>
+        </a>
+        ·
+        <a href="../guia/">
+          <span data-lang="en-US">Beginner's Guide</span>
+          <span data-lang="pt-BR">Guia para Iniciantes</span>
+        </a>
         ·
         <a href="https://github.com/freeskills/marketplace">Marketplace</a>
       </p>
     </footer>
 
-    <div class="toast" id="toast" role="status" aria-live="polite" hidden>Copied</div>
-    <script src="../app.js"></script>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../i18n.js"></script>
+    <script src="../app.js?v=donation-4"></script>
   </body>
 </html>

@@ -23,21 +23,24 @@
     }, 1400);
   }
 
+  function t(key) {
+    return window.FreeSkillsI18n ? window.FreeSkillsI18n.t(key) : key;
+  }
+
   async function copyText(text, button) {
     try {
       await navigator.clipboard.writeText(text);
       if (button) {
-        const prev = button.textContent;
-        button.textContent = "Copied";
+        button.textContent = t("copied");
         button.classList.add("is-copied");
         setTimeout(() => {
-          button.textContent = prev;
+          button.textContent = t("copy");
           button.classList.remove("is-copied");
         }, 1200);
       }
-      showToast("Copied to clipboard");
+      showToast(t("copiedToast"));
     } catch {
-      showToast("Copy failed — select the command manually");
+      showToast(t("copyFail"));
     }
   }
 
@@ -46,6 +49,86 @@
     const text = block.getAttribute("data-copy") || block.querySelector("code")?.textContent || "";
     button?.addEventListener("click", () => copyText(text.trim(), button));
   });
+
+  const donateButton = document.createElement("button");
+  donateButton.className = "donate-float";
+  donateButton.type = "button";
+  donateButton.disabled = true;
+  donateButton.setAttribute("aria-busy", "true");
+  donateButton.innerHTML =
+    '<span data-lang="en-US">Donate</span><span data-lang="pt-BR">Apoiar</span><span class="donate-sdk-target" id="donate-sdk-target" aria-hidden="true"></span>';
+
+  document.body.append(donateButton);
+
+  let donateSdkPromise;
+  let donateRenderPromise;
+  let donateRendered = false;
+
+  function loadDonateSdk() {
+    if (window.PayPal?.Donation?.Button) return Promise.resolve();
+    if (donateSdkPromise) return donateSdkPromise;
+
+    donateSdkPromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://www.paypalobjects.com/donate/sdk/donate-sdk.js";
+      script.charset = "UTF-8";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = () => {
+        donateSdkPromise = null;
+        reject(new Error("PayPal SDK failed to load"));
+      };
+      document.head.appendChild(script);
+    });
+
+    return donateSdkPromise;
+  }
+
+  const donateOptions = {
+    env: "production",
+    hosted_button_id: "XTCCX24GB2ULJ",
+    image: {
+      src: "https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif",
+      alt: "Donate with PayPal button",
+      title: "PayPal - The safer, easier way to pay online!",
+    },
+  };
+
+  function renderDonation() {
+    if (donateRendered) return Promise.resolve();
+    if (donateRenderPromise) return donateRenderPromise;
+
+    donateRenderPromise = loadDonateSdk()
+      .then(() => {
+        window.PayPal.Donation.Button(donateOptions).render("#donate-sdk-target");
+        donateRendered = true;
+        donateButton.disabled = false;
+        donateButton.setAttribute("aria-busy", "false");
+      })
+      .catch(() => {
+        donateSdkPromise = null;
+        donateRenderPromise = null;
+        donateButton.disabled = false;
+        donateButton.setAttribute("aria-busy", "false");
+      });
+
+    return donateRenderPromise;
+  }
+
+  function openPayPalDonation() {
+    window.open(
+      "https://www.paypal.com/donate/?hosted_button_id=XTCCX24GB2ULJ",
+      "_blank",
+      "noopener",
+    );
+  }
+
+  donateButton.addEventListener("click", (event) => {
+    if (!event.target.closest("#donate-button")) openPayPalDonation();
+  });
+  donateButton.addEventListener("pointerenter", renderDonation, { once: true });
+  donateButton.addEventListener("focus", renderDonation, { once: true });
+  renderDonation();
 
   const tabs = Array.from(document.querySelectorAll(".tool-switch__btn"));
   const panels = Array.from(document.querySelectorAll(".panel"));
@@ -66,4 +149,38 @@
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => activateTool(tab.dataset.tool));
   });
+
+  const osOptions = Array.from(document.querySelectorAll(".os-switch__option"));
+  const osPanels = Array.from(document.querySelectorAll(".os-panel"));
+
+  function activateOs(os) {
+    osOptions.forEach((option) => {
+      const active = option.dataset.os === os;
+      option.classList.toggle("is-active", active);
+      option.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+    osPanels.forEach((panel) => {
+      panel.hidden = panel.dataset.osPanel !== os;
+    });
+  }
+
+  function detectOs() {
+    const platform = [
+      navigator.userAgentData?.platform,
+      navigator.platform,
+      navigator.userAgent,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    if (/windows|win32|win64/.test(platform)) return "windows";
+    if (/macintosh|macintel|macos|darwin/.test(platform)) return "macos";
+    return "linux";
+  }
+
+  osOptions.forEach((option) => {
+    option.addEventListener("click", () => activateOs(option.dataset.os));
+  });
+  if (osOptions.length) activateOs(detectOs());
 })();

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Especificar a área administrativa · Guia para Iniciantes · FreeSkills</title>
+    <meta name="description" content="Pronto para implementar: a Marina lista, cadastra, edita e remove imóveis." />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../styles.css" />
+  </head>
+  <body
+    class="page-guide"
+    data-guide-page="sdd/especificar-feature"
+    data-i18n-page="guide-especificar"
+  >
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../../../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../../../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="../../../plugins/">Plugins</a>
+            <a class="topnav__guide" href="../../" aria-current="page">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../../../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+                    <p class="crumb">
+            <a href="../../">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <a href="../">
+              <span data-lang="en-US">6. Specification Driven Development</span>
+              <span data-lang="pt-BR">6. Specification Driven Development</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <span>
+              <span data-lang="en-US">Specify the admin</span>
+              <span data-lang="pt-BR">Especificar o admin</span>
+            </span>
+          </p>
+          <p class="eyebrow">6.4</p>
+          <h1>
+            <span data-lang="en-US">Specify the admin area</span>
+            <span data-lang="pt-BR">Especificar a área administrativa</span>
+          </h1>
+          <p class="section__lede">
+            <span data-lang="en-US">Definition of Ready: the spec is small enough to build in one sitting.</span>
+            <span data-lang="pt-BR">Definition of Ready: a spec pequena o bastante para fazer numa sentada.</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="guide-layout">
+          <aside class="guide-aside" data-guide-nav></aside>
+          <div class="guide-main">
+            <article class="guide-article" data-lang="pt-BR">
+              <h2>Introdução</h2>
+
+              <p>
+                A spec do admin é o contrato. Se ela pedir CRM ou login social, você recusa: o DNA disse que não. Se ela omitir “remover”, a Marina fica presa a imóveis fantasma.
+              </p>
+
+              <h2>O que você vai aprender</h2>
+
+              <ul>
+                <li>Lista, cadastro, edição, exclusão e quem acessa.</li>
+                <li>Definition of Ready e Definition of Done.</li>
+                <li>Aprovar a spec antes de qualquer HTML novo.</li>
+              </ul>
+
+              <h2>Por que isso importa</h2>
+
+              <p>
+                Implementar sem spec neste ponto desfaz o módulo. O código tem que caber no texto que você aprovou.
+              </p>
+
+              <h2>Pedido</h2>              <div class="guide-example">
+                <p class="guide-example__label">Prompt</p>
+                <div class="copy-block" data-copy="DNA do site da Marina Alves está no repo. Skill marina-imovel vale só para o visual.&#10;&#10;Escreva a spec da feature &quot;Área administrativa de imóveis&quot; (ainda sem implementar):&#10;&#10;Pronto para implementar quando:&#10;- Só a Marina acessa (/admin). Senha simples neste recorte; não é segurança de produção.&#10;- Ela lista os imóveis do estoque (JSON).&#10;- Ela cadastra um imóvel (titulo, bairro, quartos, preco, resumo, destaque).&#10;- Ela edita e remove um existente.&#10;- O catálogo público reflete a mudança depois de gravar.&#10;- Comprador não vê o admin no menu.&#10;- Não é CRM, não é multi-usuário, não é portal tipo ZAP.&#10;&#10;Inclua Definition of Done:&#10;- Senha errada: erro visível, sem entrar.&#10;- Cadastro válido aparece na lista admin e no catálogo público.&#10;- Remover some dos dois.&#10;- Teste manual desses três caminhos.&#10;&#10;Não gere HTML ainda. Quero a spec no .specs/ para eu ler e aprovar.">
+                  <pre><code>DNA do site da Marina Alves está no repo. Skill marina-imovel vale só para o visual.
+
+Escreva a spec da feature &quot;Área administrativa de imóveis&quot; (ainda sem implementar):
+
+Pronto para implementar quando:
+- Só a Marina acessa (/admin). Senha simples neste recorte; não é segurança de produção.
+- Ela lista os imóveis do estoque (JSON).
+- Ela cadastra um imóvel (titulo, bairro, quartos, preco, resumo, destaque).
+- Ela edita e remove um existente.
+- O catálogo público reflete a mudança depois de gravar.
+- Comprador não vê o admin no menu.
+- Não é CRM, não é multi-usuário, não é portal tipo ZAP.
+
+Inclua Definition of Done:
+- Senha errada: erro visível, sem entrar.
+- Cadastro válido aparece na lista admin e no catálogo público.
+- Remover some dos dois.
+- Teste manual desses três caminhos.
+
+Não gere HTML ainda. Quero a spec no .specs/ para eu ler e aprovar.</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+              </div>              <ol class="guide-flow">
+                <li><span class="guide-flow__n" aria-hidden="true">1</span>Leia a spec em voz alta.</li>
+                <li><span class="guide-flow__n" aria-hidden="true">2</span>Corte o que passou do DNA.</li>
+                <li><span class="guide-flow__n" aria-hidden="true">3</span>Só então a próxima lição gera o admin.</li>
+              </ol>
+
+              <h2>Checklist</h2>
+
+              <ul>
+                <li>A spec está no repo e você leu.</li>
+                <li>Há um caminho feliz (cadastrar) e um erro (senha errada).</li>
+                <li>Done inclui o imóvel no catálogo público, não só “arquivo criado”.</li>
+              </ul>
+
+              <h2>Próximo passo</h2>
+
+              <p>
+                Última lição do guia: implementar a fatia a partir da spec, com a Skill no visual.
+              </p>
+            </article>
+            <article class="guide-article" data-lang="en-US">
+              <h2>Introduction</h2>
+
+              <p>
+                The admin spec is the contract. If it asks for a CRM or social login, you refuse: DNA said no. If it leaves “remove” out, Marina is stuck with ghost listings.
+              </p>
+
+              <h2>What you will learn</h2>
+
+              <ul>
+                <li>List, add, edit, remove, and who can access.</li>
+                <li>Definition of Ready and Definition of Done.</li>
+                <li>Approve the spec before any new HTML.</li>
+              </ul>
+
+              <h2>Why this matters</h2>
+
+              <p>
+                Implementing without a spec at this point undoes the module. The code has to fit the text you approved.
+              </p>
+
+              <h2>The ask</h2>              <div class="guide-example">
+                <p class="guide-example__label">Prompt</p>
+                <div class="copy-block" data-copy="DNA do site da Marina Alves está no repo. Skill marina-imovel vale só para o visual.&#10;&#10;Escreva a spec da feature &quot;Área administrativa de imóveis&quot; (ainda sem implementar):&#10;&#10;Pronto para implementar quando:&#10;- Só a Marina acessa (/admin). Senha simples neste recorte; não é segurança de produção.&#10;- Ela lista os imóveis do estoque (JSON).&#10;- Ela cadastra um imóvel (titulo, bairro, quartos, preco, resumo, destaque).&#10;- Ela edita e remove um existente.&#10;- O catálogo público reflete a mudança depois de gravar.&#10;- Comprador não vê o admin no menu.&#10;- Não é CRM, não é multi-usuário, não é portal tipo ZAP.&#10;&#10;Inclua Definition of Done:&#10;- Senha errada: erro visível, sem entrar.&#10;- Cadastro válido aparece na lista admin e no catálogo público.&#10;- Remover some dos dois.&#10;- Teste manual desses três caminhos.&#10;&#10;Não gere HTML ainda. Quero a spec no .specs/ para eu ler e aprovar.">
+                  <pre><code>DNA do site da Marina Alves está no repo. Skill marina-imovel vale só para o visual.
+
+Escreva a spec da feature &quot;Área administrativa de imóveis&quot; (ainda sem implementar):
+
+Pronto para implementar quando:
+- Só a Marina acessa (/admin). Senha simples neste recorte; não é segurança de produção.
+- Ela lista os imóveis do estoque (JSON).
+- Ela cadastra um imóvel (titulo, bairro, quartos, preco, resumo, destaque).
+- Ela edita e remove um existente.
+- O catálogo público reflete a mudança depois de gravar.
+- Comprador não vê o admin no menu.
+- Não é CRM, não é multi-usuário, não é portal tipo ZAP.
+
+Inclua Definition of Done:
+- Senha errada: erro visível, sem entrar.
+- Cadastro válido aparece na lista admin e no catálogo público.
+- Remover some dos dois.
+- Teste manual desses três caminhos.
+
+Não gere HTML ainda. Quero a spec no .specs/ para eu ler e aprovar.</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+              </div>              <ol class="guide-flow">
+                <li><span class="guide-flow__n" aria-hidden="true">1</span>Read the spec out loud.</li>
+                <li><span class="guide-flow__n" aria-hidden="true">2</span>Cut what went past the DNA.</li>
+                <li><span class="guide-flow__n" aria-hidden="true">3</span>Only then the next lesson builds the admin.</li>
+              </ol>
+
+              <h2>Checklist</h2>
+
+              <ul>
+                <li>The spec is in the repo and you read it.</li>
+                <li>There is a happy path (add a listing) and one error (wrong password).</li>
+                <li>Done includes the listing on the public catalog, not only “file created”.</li>
+              </ul>
+
+              <h2>Next step</h2>
+
+              <p>
+                Last lesson in the guide: implement the slice from the spec, with the Skill on the look.
+              </p>
+            </article>
+            
+            <nav
+              class="guide-pager"
+              data-guide-pager
+              aria-label="Guide pagination"
+            ></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="../"
+          ><span data-lang="en-US">Module index</span
+          ><span data-lang="pt-BR">Índice do módulo</span></a
+        >
+        ·
+        <a href="../../"
+          ><span data-lang="en-US">Beginner's Guide</span
+          ><span data-lang="pt-BR">Guia para Iniciantes</span></a
+        >
+        ·
+        <a href="../../../"
+          ><span data-lang="en-US">Home</span
+          ><span data-lang="pt-BR">Início</span></a
+        >
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../../../i18n.js"></script>
+    <script src="../../../app.js?v=donation-4"></script>
+    <script src="../../guia.js"></script>
+  </body>
+</html>

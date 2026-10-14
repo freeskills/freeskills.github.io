@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instalando o Git · Guia para Iniciantes · FreeSkills</title>
+    <meta
+      name="description"
+      content="Instale o Git no Linux, macOS ou WSL, configure nome e e-mail e faça o primeiro commit."
+    />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../styles.css" />
+  </head>
+  <body
+    class="page-guide"
+    data-guide-page="comecando/instalando-git"
+    data-i18n-page="guide-git"
+  >
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../../../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../../../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="../../../plugins/">Plugins</a>
+            <a class="topnav__guide" href="../../" aria-current="page">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../../../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+          <p class="crumb">
+            <a href="../../">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <a href="../">
+              <span data-lang="en-US">1. Getting started</span>
+              <span data-lang="pt-BR">1. Começando</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <span>
+              <span data-lang="en-US">Git</span>
+              <span data-lang="pt-BR">Git</span>
+            </span>
+          </p>
+          <p class="eyebrow">1.6</p>
+          <h1>
+            <span data-lang="en-US">Installing Git</span>
+            <span data-lang="pt-BR">Instalando o Git</span>
+          </h1>
+          <p class="section__lede">
+            <span data-lang="en-US"
+              >With Git installed and a first commit saved, you can change code
+              with AI and still know what changed and how to go back.</span
+            >
+            <span data-lang="pt-BR"
+              >Com o Git instalado e um primeiro commit salvo, você pode mudar
+              código com IA e ainda saber o que mudou e como voltar atrás.</span
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="guide-layout">
+          <aside class="guide-aside" data-guide-nav></aside>
+          <div class="guide-main">
+            <article class="guide-article" data-lang="pt-BR">
+              <h2>Introdução</h2>
+              <p>
+                Sem Git, cada alteração da IA é um salto no escuro: você não
+                tem um ponto seguro para comparar. Com Git, o histórico vira a
+                rede de segurança do módulo seguinte, quando o primeiro projeto
+                começa de verdade.
+              </p>
+              <p>
+                Esta página é prática. O objetivo é terminar com o Git
+                instalado, nome e e-mail configurados, e um repositório de teste
+                com pelo menos um commit.
+              </p>
+
+              <h2>O que você vai aprender</h2>
+              <ul>
+                <li>Como verificar se o Git já está no sistema.</li>
+                <li>Como instalar no Linux, no macOS e no WSL.</li>
+                <li>Como configurar nome e e-mail uma vez.</li>
+                <li>
+                  Como criar um repositório, salvar um commit e ver o diff.
+                </li>
+              </ul>
+
+              <h2>Por que isso importa</h2>
+              <p>
+                No próximo módulo você vai criar e modificar arquivos com
+                ajuda da IA. Sem um histórico, “desfazer” vira adivinhar. Com
+                um commit limpo, o diff mostra exatamente o que a IA mudou, e
+                você decide o que fica.
+              </p>
+
+              <h2>1. Confira se já está instalado</h2>
+              <p>Abra o terminal (no Windows, use o WSL) e rode:</p>
+              <div class="guide-example">
+                <p class="guide-example__label">Verificar</p>
+                <div class="copy-block" data-copy="git --version">
+                  <pre><code>git --version</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+              </div>
+              <p>
+                Se aparecer algo como <code>git version 2.x.x</code>, o Git já
+                está pronto. Pule a instalação e vá para a configuração.
+              </p>
+
+              <h2>2. Instalar</h2>
+              <p>
+                Escolha o caminho do seu sistema. No Windows, instale
+                <em>dentro do WSL</em>, não no PowerShell do Windows, para os
+                comandos deste guia baterem com o restante do material.
+              </p>
+
+              <h3>Linux (Debian / Ubuntu) e WSL</h3>
+              <div
+                class="copy-block"
+                data-copy="sudo apt update&#10;sudo apt install -y git"
+              >
+                <pre><code>sudo apt update
+sudo apt install -y git</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                Em Fedora ou RHEL, o equivalente costuma ser
+                <code>sudo dnf install -y git</code>. Em Arch:
+                <code>sudo pacman -S git</code>.
+              </p>
+
+              <h3>macOS</h3>
+              <p>
+                A forma mais simples é instalar as ferramentas de linha de
+                comando da Apple (trazem o Git):
+              </p>
+              <div class="copy-block" data-copy="xcode-select --install">
+                <pre><code>xcode-select --install</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                Se você já usa Homebrew, também funciona
+                <code>brew install git</code>. Depois, rode de novo
+                <code>git --version</code>.
+              </p>
+
+              <h3>Referência oficial</h3>
+              <p>
+                Se o seu sistema for diferente, use o guia atual:
+                <a
+                  href="https://git-scm.com/downloads"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >git-scm.com/downloads</a
+                >.
+              </p>
+
+              <h2>3. Configurar nome e e-mail</h2>
+              <p>
+                Faça isso uma vez por máquina. Os commits vão carregar esses
+                dados. Use o nome que você quer ver no histórico e um e-mail
+                real seu:
+              </p>
+              <div
+                class="copy-block"
+                data-copy="git config --global user.name &quot;Seu Nome&quot;&#10;git config --global user.email &quot;voce@email.com&quot;"
+              >
+                <pre><code>git config --global user.name "Seu Nome"
+git config --global user.email "voce@email.com"</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>Para conferir:</p>
+              <div class="copy-block" data-copy="git config --global --list">
+                <pre><code>git config --global --list</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+
+              <h2>4. Primeiro repositório e primeiro commit</h2>
+              <p>
+                Crie uma pasta de teste dentro de <code>~/projetos</code> (ou
+                a pasta mãe que você escolheu) e grave um ponto inicial:
+              </p>
+              <div
+                class="copy-block"
+                data-copy="mkdir -p ~/projetos/teste-git&#10;cd ~/projetos/teste-git&#10;git init&#10;echo &quot;# teste&quot; > README.md&#10;git add README.md&#10;git commit -m &quot;Primeiro commit&quot;&#10;git status&#10;git log --oneline"
+              >
+                <pre><code>mkdir -p ~/projetos/teste-git
+cd ~/projetos/teste-git
+git init
+echo "# teste" > README.md
+git add README.md
+git commit -m "Primeiro commit"
+git status
+git log --oneline</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                Se <code>git status</code> disser que não há nada pendente e
+                <code>git log</code> mostrar o commit, o básico está pronto.
+              </p>
+
+              <h2>5. Ver o que mudou</h2>
+              <p>
+                Edite o <code>README.md</code>, salve, e compare com o último
+                commit:
+              </p>
+              <div class="copy-block" data-copy="git diff">
+                <pre><code>git diff</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                Esse comando é o que você vai usar o tempo todo quando a IA
+                alterar arquivos: olhar o diff antes de aceitar o resultado.
+              </p>
+
+              <div class="guide-callout">
+                <p>
+                  Neste módulo, Git local basta. Conta no GitHub, SSH keys,
+                  branches e pull requests podem esperar o primeiro projeto
+                  real.
+                </p>
+              </div>
+
+              <h2>Checklist antes do próximo conteúdo</h2>
+              <ul>
+                <li><code>git --version</code> responde sem erro.</li>
+                <li>
+                  <code>user.name</code> e <code>user.email</code> estão
+                  definidos.
+                </li>
+                <li>Existe pelo menos um commit em uma pasta de teste.</li>
+                <li>Você sabe abrir o terminal na pasta do projeto.</li>
+              </ul>
+
+              <h2>Próximo passo</h2>
+              <p>
+                Com o Git no lugar, o próximo conteúdo coloca a IA dentro do
+                ambiente: como instalar e usar o Claude sem tratar o chat como
+                um gerador mágico de sistemas inteiros.
+              </p>
+            </article>
+
+            <article class="guide-article" data-lang="en-US">
+              <h2>Introduction</h2>
+              <p>
+                Without Git, every AI change is a leap in the dark: you have no
+                safe point to compare against. With Git, history becomes the
+                safety net for the next module, when the first project starts
+                for real.
+              </p>
+              <p>
+                This page is practical. The goal is to finish with Git
+                installed, name and email configured, and a test repository
+                with at least one commit.
+              </p>
+
+              <h2>What you will learn</h2>
+              <ul>
+                <li>How to check whether Git is already on the system.</li>
+                <li>How to install it on Linux, macOS, and WSL.</li>
+                <li>How to set name and email once.</li>
+                <li>
+                  How to create a repository, save a commit, and read a diff.
+                </li>
+              </ul>
+
+              <h2>Why this matters</h2>
+              <p>
+                In the next module you will create and change files with AI
+                help. Without history, “undo” becomes guesswork. With a clean
+                commit, the diff shows exactly what the AI changed, and you
+                decide what stays.
+              </p>
+
+              <h2>1. Check if it is already installed</h2>
+              <p>Open the terminal (on Windows, use WSL) and run:</p>
+              <div class="guide-example">
+                <p class="guide-example__label">Check</p>
+                <div class="copy-block" data-copy="git --version">
+                  <pre><code>git --version</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+              </div>
+              <p>
+                If you see something like <code>git version 2.x.x</code>, Git
+                is ready. Skip install and go to configuration.
+              </p>
+
+              <h2>2. Install</h2>
+              <p>
+                Pick the path for your system. On Windows, install
+                <em>inside WSL</em>, not in Windows PowerShell, so the commands
+                in this guide match the rest of the material.
+              </p>
+
+              <h3>Linux (Debian / Ubuntu) and WSL</h3>
+              <div
+                class="copy-block"
+                data-copy="sudo apt update&#10;sudo apt install -y git"
+              >
+                <pre><code>sudo apt update
+sudo apt install -y git</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                On Fedora or RHEL, the usual equivalent is
+                <code>sudo dnf install -y git</code>. On Arch:
+                <code>sudo pacman -S git</code>.
+              </p>
+
+              <h3>macOS</h3>
+              <p>
+                The simplest path is Apple's command line tools (they include
+                Git):
+              </p>
+              <div class="copy-block" data-copy="xcode-select --install">
+                <pre><code>xcode-select --install</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                If you already use Homebrew,
+                <code>brew install git</code> also works. Then run
+                <code>git --version</code> again.
+              </p>
+
+              <h3>Official reference</h3>
+              <p>
+                If your system is different, use the current guide:
+                <a
+                  href="https://git-scm.com/downloads"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >git-scm.com/downloads</a
+                >.
+              </p>
+
+              <h2>3. Set name and email</h2>
+              <p>
+                Do this once per machine. Commits will carry that identity. Use
+                the name you want in history and a real email of yours:
+              </p>
+              <div
+                class="copy-block"
+                data-copy="git config --global user.name &quot;Your Name&quot;&#10;git config --global user.email &quot;you@email.com&quot;"
+              >
+                <pre><code>git config --global user.name "Your Name"
+git config --global user.email "you@email.com"</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>To verify:</p>
+              <div class="copy-block" data-copy="git config --global --list">
+                <pre><code>git config --global --list</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+
+              <h2>4. First repository and first commit</h2>
+              <p>
+                Create a test folder inside <code>~/projetos</code> (or the
+                parent folder you chose) and save an initial point:
+              </p>
+              <div
+                class="copy-block"
+                data-copy="mkdir -p ~/projetos/teste-git&#10;cd ~/projetos/teste-git&#10;git init&#10;echo &quot;# teste&quot; > README.md&#10;git add README.md&#10;git commit -m &quot;First commit&quot;&#10;git status&#10;git log --oneline"
+              >
+                <pre><code>mkdir -p ~/projetos/teste-git
+cd ~/projetos/teste-git
+git init
+echo "# teste" > README.md
+git add README.md
+git commit -m "First commit"
+git status
+git log --oneline</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                If <code>git status</code> says nothing is pending and
+                <code>git log</code> shows the commit, the basics are ready.
+              </p>
+
+              <h2>5. See what changed</h2>
+              <p>
+                Edit <code>README.md</code>, save, and compare with the last
+                commit:
+              </p>
+              <div class="copy-block" data-copy="git diff">
+                <pre><code>git diff</code></pre>
+                <button type="button" class="copy-btn">Copy</button>
+              </div>
+              <p>
+                This is the command you will use constantly when AI changes
+                files: read the diff before you accept the result.
+              </p>
+
+              <div class="guide-callout">
+                <p>
+                  In this module, local Git is enough. A GitHub account, SSH
+                  keys, branches, and pull requests can wait for the first real
+                  project.
+                </p>
+              </div>
+
+              <h2>Checklist before the next lesson</h2>
+              <ul>
+                <li><code>git --version</code> responds without error.</li>
+                <li>
+                  <code>user.name</code> and <code>user.email</code> are set.
+                </li>
+                <li>There is at least one commit in a test folder.</li>
+                <li>You know how to open the terminal in the project folder.</li>
+              </ul>
+
+              <h2>Next step</h2>
+              <p>
+                With Git in place, the next lesson puts AI inside the
+                environment: how to install and use Claude without treating the
+                chat as a magic generator of whole systems.
+              </p>
+            </article>
+
+            <nav
+              class="guide-pager"
+              data-guide-pager
+              aria-label="Guide pagination"
+            ></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="../"
+          ><span data-lang="en-US">Module index</span
+          ><span data-lang="pt-BR">Índice do módulo</span></a
+        >
+        ·
+        <a href="../../"
+          ><span data-lang="en-US">Beginner's Guide</span
+          ><span data-lang="pt-BR">Guia para Iniciantes</span></a
+        >
+        ·
+        <a href="../../../"
+          ><span data-lang="en-US">Home</span
+          ><span data-lang="pt-BR">Início</span></a
+        >
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../../../i18n.js"></script>
+    <script src="../../../app.js?v=donation-4"></script>
+    <script src="../../guia.js"></script>
+  </body>
+</html>

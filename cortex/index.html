@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else if ([...(navigator.languages || []), navigator.language].some((x) => /^pt\b/i.test(x || ""))) l = "pt-BR";
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent = '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cortex · Ambiente de desenvolvimento</title>
+    <meta name="description" content="Editor, terminal, Git, chat com Claude, MySQL e painel de uso em um ambiente de desenvolvimento local." />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="page-cortex" data-i18n-page="cortex">
+    <a class="skip-link" href="#main"><span data-lang="en-US">Skip to content</span><span data-lang="pt-BR">Ir para o conteúdo</span></a>
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="#top" aria-label="Cortex"><span class="brand-mark__dot" aria-hidden="true"></span>Cortex</a>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="#features"><span data-lang="en-US">Features</span><span data-lang="pt-BR">Recursos</span></a>
+            <a href="#install"><span data-lang="en-US">Install</span><span data-lang="pt-BR">Instalar</span></a>
+            <a class="topnav__repo" href="../"><span data-lang="en-US">FreeSkills home</span><span data-lang="pt-BR">Início FreeSkills</span></a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="cortex-hero" id="top" aria-labelledby="cortex-title">
+        <div class="cortex-hero__copy">
+          <p class="eyebrow"><span data-lang="en-US">DESKTOP WORKBENCH</span><span data-lang="pt-BR">AMBIENTE DE DESENVOLVIMENTO</span></p>
+          <h1 id="cortex-title">Cortex</h1>
+          <p class="cortex-hero__lead"><span data-lang="en-US">Your code, tools, and AI. Together in one window.</span><span data-lang="pt-BR">Seu código, suas ferramentas e IA. Tudo na mesma janela.</span></p>
+          <p class="cortex-hero__detail"><span data-lang="en-US">A focused workspace for building software, without a pile of extensions to configure.</span><span data-lang="pt-BR">Um espaço de trabalho direto ao ponto, sem uma pilha de extensões para configurar.</span></p>
+          <div class="cortex-hero__actions"><a class="btn btn--primary" href="#install"><span data-lang="en-US">Install Cortex</span><span data-lang="pt-BR">Instalar Cortex</span></a><a class="btn btn--ghost" href="#features"><span data-lang="en-US">Explore features</span><span data-lang="pt-BR">Conhecer recursos</span></a></div>
+          <p class="cortex-platforms">Linux <span>·</span> macOS <span>·</span> Windows</p>
+        </div>
+        <div class="cortex-window" aria-label="Cortex workspace illustration">
+          <div class="cortex-window__bar"><div class="cortex-window__lights" aria-hidden="true"><i></i><i></i><i></i></div><span>cortex / projeto</span><span class="cortex-window__branch">main</span></div>
+          <div class="cortex-workspace">
+            <aside class="cortex-rail" aria-hidden="true"><b>EX</b><span>⌘</span><span>◈</span><span>⌁</span></aside>
+            <div class="cortex-files"><p>EXPLORER</p><span>⌄ src</span><span class="is-selected">　◧ App.tsx</span><span>　◧ styles.css</span><span>⌄ docs</span><span>　◧ roadmap.md</span><span>◧ package.json</span></div>
+            <div class="cortex-editor">
+              <div class="cortex-tab">App.tsx <small>×</small></div>
+              <div class="cortex-code" aria-hidden="true">
+                <span><i>1</i><em>import</em> { <b>Workspace</b> } <em>from</em> <strong>'./workbench'</strong>;</span><span><i>2</i></span><span><i>3</i><em>export default function</em> <b>App</b>() {</span><span><i>4</i>　<em>return</em> (</span><span><i>5</i>　　&lt;<b>Workspace</b></span><span><i>6</i>　　　project={<strong>"cortex"</strong>}</span><span><i>7</i>　　　tools={[<strong>"editor"</strong>, <strong>"git"</strong>, <strong>"claude"</strong>]}</span><span><i>8</i>　　/&gt;</span><span><i>9</i>　);</span><span><i>10</i>}</span>
+              </div>
+              <div class="cortex-bottom"><span>TERMINAL</span><span>GIT</span><span>OUTPUT</span></div>
+              <div class="cortex-prompt"><b>›</b> npm run dev <span>Ready on localhost</span></div>
+            </div>
+          </div>
+          <p class="cortex-window__caption"><span data-lang="en-US">Illustrative interface</span><span data-lang="pt-BR">Interface ilustrativa</span></p>
+        </div>
+      </section>
+      <section class="cortex-intro"><div class="cortex-intro__inner"><p class="eyebrow"><span data-lang="en-US">ONE WORKSPACE</span><span data-lang="pt-BR">UM SÓ AMBIENTE</span></p><h2><span data-lang="en-US">Everything you need. Nothing you don't.</span><span data-lang="pt-BR">Tudo que você precisa, nada que você não precisa.</span></h2><p><span data-lang="en-US">Cortex brings the tools you use every day into a single, local desktop app.</span><span data-lang="pt-BR">O Cortex reúne as ferramentas do dia a dia em um único aplicativo local.</span></p></div></section>
+      <section class="cortex-features" id="features" aria-label="Cortex features">
+        <article class="cortex-feature"><span class="cortex-feature__index">01 / EDIT</span><h2><span data-lang="en-US">Editor and file explorer</span><span data-lang="pt-BR">Editor e explorador de arquivos</span></h2><p><span data-lang="en-US">Navigate your project tree and edit with Monaco, the engine behind VS Code. Markdown and Mermaid previews update as you work.</span><span data-lang="pt-BR">Navegue pelos arquivos e edite com Monaco, o mesmo motor do VS Code. Veja previews de Markdown e Mermaid enquanto trabalha.</span></p><span class="cortex-feature__mark" aria-hidden="true">{ }</span></article>
+        <article class="cortex-feature"><span class="cortex-feature__index">02 / RUN</span><h2><span data-lang="en-US">Integrated terminals</span><span data-lang="pt-BR">Terminais integrados</span></h2><p><span data-lang="en-US">Open terminal tabs beside your code. Sessions persist when you switch tabs.</span><span data-lang="pt-BR">Abra abas de terminal ao lado do código. As sessões continuam ativas quando você troca de aba.</span></p><span class="cortex-feature__mark" aria-hidden="true">&gt;_</span></article>
+        <article class="cortex-feature"><span class="cortex-feature__index">03 / TRACK</span><h2><span data-lang="en-US">Visual Git</span><span data-lang="pt-BR">Git visual</span></h2><p><span data-lang="en-US">Review status, diffs, commit history, and a visual commit graph without leaving the repository.</span><span data-lang="pt-BR">Consulte status, diffs, histórico e grafo de commits sem sair do repositório.</span></p><span class="cortex-feature__mark" aria-hidden="true">⑂</span></article>
+        <article class="cortex-feature"><span class="cortex-feature__index">04 / ASK</span><h2><span data-lang="en-US">Claude chat, built in</span><span data-lang="pt-BR">Chat com Claude integrado</span></h2><p><span data-lang="en-US">Streaming responses, file attachments, and workspace history. Use the Claude CLI or your own API key.</span><span data-lang="pt-BR">Respostas em streaming, anexos e histórico por workspace. Use o CLI do Claude ou sua própria chave de API.</span></p><span class="cortex-feature__mark" aria-hidden="true">✳</span></article>
+        <article class="cortex-feature"><span class="cortex-feature__index">05 / QUERY</span><h2><span data-lang="en-US">MySQL client</span><span data-lang="pt-BR">Cliente MySQL</span></h2><p><span data-lang="en-US">Browse schemas and tables, write SQL with autocomplete, inspect result grids, and export or copy results.</span><span data-lang="pt-BR">Explore schemas e tabelas, escreva SQL com autocomplete e exporte ou copie os resultados.</span></p><span class="cortex-feature__mark" aria-hidden="true">⌗</span></article>
+        <article class="cortex-feature"><span class="cortex-feature__index">06 / MEASURE</span><h2><span data-lang="en-US">Usage dashboard</span><span data-lang="pt-BR">Painel de uso</span></h2><p><span data-lang="en-US">See Claude Code token usage by day, week, or month, read from local session logs.</span><span data-lang="pt-BR">Acompanhe o uso de tokens do Claude Code por dia, semana ou mês, a partir dos logs locais.</span></p><span class="cortex-feature__mark" aria-hidden="true">▥</span></article>
+      </section>
+      <section class="cortex-contrast"><div class="cortex-contrast__copy"><p class="eyebrow"><span data-lang="en-US">LESS SETUP, SAME CONTROL</span><span data-lang="pt-BR">MENOS CONFIGURAÇÃO, O MESMO CONTROLE</span></p><h2><span data-lang="en-US">Skip the setup. Keep the power.</span><span data-lang="pt-BR">Pule a configuração. Mantenha o poder.</span></h2><p><span data-lang="en-US">No account, no server, no extension hunt. Your workspace runs locally.</span><span data-lang="pt-BR">Sem conta, sem servidor e sem caça a extensões. Seu ambiente roda localmente.</span></p></div><ul class="cortex-contrast__list"><li><span>01</span><span data-lang="en-US">Editor, terminal, Git, and AI ready</span><span data-lang="pt-BR">Editor, terminal, Git e IA prontos</span></li><li><span>02</span><span data-lang="en-US">Local, without an account or hosted server</span><span data-lang="pt-BR">Local, sem conta ou servidor remoto</span></li><li><span>03</span><span data-lang="en-US">Your tools together in one window</span><span data-lang="pt-BR">Suas ferramentas na mesma janela</span></li></ul></section>
+      <section class="cortex-install" id="install">
+        <div class="cortex-install__copy">
+          <p class="eyebrow"><span data-lang="en-US">GET STARTED</span><span data-lang="pt-BR">COMECE AGORA</span></p>
+          <h2><span data-lang="en-US">One command to get started.</span><span data-lang="pt-BR">Um comando para começar.</span></h2>
+          <p><span data-lang="en-US">Choose your system. The matching installer is selected automatically.</span><span data-lang="pt-BR">Escolha seu sistema. O instalador correspondente é selecionado automaticamente.</span></p>
+        </div>
+        <div class="os-switch" role="group" data-i18n-aria="systemPicker" aria-label="Choose your operating system">
+          <button type="button" class="os-switch__option is-active" data-os="linux" aria-pressed="true">Linux</button>
+          <button type="button" class="os-switch__option" data-os="macos" aria-pressed="false">macOS</button>
+          <button type="button" class="os-switch__option" data-os="windows" aria-pressed="false">Windows</button>
+        </div>
+
+        <div class="os-panel" data-os-panel="linux">
+          <div class="copy-block cortex-install__command" data-copy="curl -fsSL https://freeskills.github.io/cortex.sh | sh">
+            <pre><code>curl -fsSL https://freeskills.github.io/cortex.sh | sh</code></pre>
+            <button type="button" class="copy-btn">Copy</button>
+          </div>
+        </div>
+        <div class="os-panel" data-os-panel="macos" hidden>
+          <div class="copy-block cortex-install__command" data-copy="curl -fsSL https://freeskills.github.io/cortex.sh | sh">
+            <pre><code>curl -fsSL https://freeskills.github.io/cortex.sh | sh</code></pre>
+            <button type="button" class="copy-btn">Copy</button>
+          </div>
+        </div>
+        <div class="os-panel" data-os-panel="windows" hidden>
+          <div class="copy-block cortex-install__command" data-copy="irm https://freeskills.github.io/cortex.ps1 | iex">
+            <pre><code>irm https://freeskills.github.io/cortex.ps1 | iex</code></pre>
+            <button type="button" class="copy-btn">Copy</button>
+          </div>
+          <p class="cortex-install__note"><span data-lang="en-US">Adds Cortex to your user PATH, Start menu, and installed apps. No administrator access is needed.</span><span data-lang="pt-BR">Adiciona o Cortex ao PATH do usuário, ao menu Iniciar e a Aplicativos instalados. Não precisa de administrador.</span></p>
+          <a class="cortex-windows" href="https://github.com/bewayio/homebrew-bcode/releases/latest/download/cortex-windows-amd64.zip"><span data-lang="en-US">Download the Windows ZIP manually</span><span data-lang="pt-BR">Baixar o ZIP do Windows manualmente</span></a>
+        </div>
+      </section>
+    </main>
+    <footer class="footer cortex-footer"><div class="footer__brand">Cortex</div><p><a href="../"><span data-lang="en-US">FreeSkills home</span><span data-lang="pt-BR">Início FreeSkills</span></a></p></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>Copied</div>
+    <script src="../i18n.js"></script><script src="../app.js?v=donation-4"></script>
+  </body>
+</html>

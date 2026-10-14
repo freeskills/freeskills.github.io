@@ -1,9 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FreeSkills — Install AI skills for Cursor, Claude & Codex</title>
+    <title>FreeSkills · Install AI skills for Cursor, Claude & Codex</title>
     <meta
       name="description"
       content="FreeSkills is a marketplace of agent skills and plugins. Add it once, install plugins, and keep them updated across Cursor, Claude Code, and Codex."
@@ -17,8 +50,11 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="page-home">
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class="page-home" data-i18n-page="home">
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
 
     <header class="topbar">
       <div class="topbar__inner">
@@ -26,18 +62,34 @@
           <span class="brand-mark__dot" aria-hidden="true"></span>
           FreeSkills
         </a>
-        <nav class="topnav" aria-label="Primary">
-          <a href="#install">Install</a>
-          <a href="plugins/">Plugins</a>
-          <a href="#update">Update</a>
-          <a
-            class="topnav__repo"
-            href="https://github.com/freeskills/marketplace"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Marketplace repo</a
-          >
-        </nav>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="plugins/">Plugins</a>
+            <a class="topnav__guide" href="cortex/">Cortex</a>
+            <a class="topnav__guide" href="guia/">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
       </div>
     </header>
 
@@ -55,7 +107,9 @@
                 <span></span><span></span><span></span>
                 <em>agent · freeskills</em>
               </div>
-              <pre class="terminal__body"><code><span class="t-muted"># once</span>
+              <pre
+                class="terminal__body"
+              ><code><span class="t-muted"># once</span>
 <span class="t-cmd">/plugin marketplace add</span> freeskills/marketplace
 
 <span class="t-muted"># then</span>
@@ -70,21 +124,38 @@
         <div class="hero__content">
           <h1 id="hero-title" class="hero__brand reveal">FreeSkills</h1>
           <p class="hero__title reveal reveal-delay-1">
-            Skills for agents. One marketplace.
+            <span data-lang="en-US">Skills for agents. One marketplace.</span>
+            <span data-lang="pt-BR">Skills para agentes. Um marketplace.</span>
           </p>
           <p class="hero__lede reveal reveal-delay-2">
-            Add FreeSkills to Cursor, Claude Code, or Codex — then install plugins
-            and keep them current without hunting repos by hand.
+            <span data-lang="en-US">
+              Add FreeSkills to Cursor, Claude Code, or Codex. Then install
+              plugins and keep them current without hunting repos by hand.
+            </span>
+            <span data-lang="pt-BR">
+              Adicione o FreeSkills ao Cursor, Claude Code ou Codex. Depois
+              instale plugins e mantenha-os atualizados sem caçar repositórios
+              na mão.
+            </span>
           </p>
           <div class="hero__actions reveal reveal-delay-3">
-            <a class="btn btn--primary" href="#install">Install marketplace</a>
-            <a class="btn btn--ghost" href="plugins/">Browse plugins</a>
+            <a class="btn btn--primary" href="#install">
+              <span data-lang="en-US">Install marketplace</span>
+              <span data-lang="pt-BR">Instalar marketplace</span>
+            </a>
+            <a class="btn btn--ghost" href="plugins/">
+              <span data-lang="en-US">Browse plugins</span>
+              <span data-lang="pt-BR">Ver plugins</span>
+            </a>
           </div>
         </div>
       </section>
 
       <section class="strip" aria-label="Supported tools">
-        <p class="strip__label">Works with</p>
+        <p class="strip__label">
+          <span data-lang="en-US">Works with</span>
+          <span data-lang="pt-BR">Funciona com</span>
+        </p>
         <ul class="strip__list">
           <li>Cursor</li>
           <li>Claude Code</li>
@@ -94,22 +165,54 @@
 
       <section class="section" id="install" aria-labelledby="install-title">
         <div class="section__intro">
-          <p class="eyebrow">Step 1</p>
-          <h2 id="install-title">Install the marketplace</h2>
+          <p class="eyebrow">
+            <span data-lang="en-US">Step 1</span>
+            <span data-lang="pt-BR">Passo 1</span>
+          </p>
+          <h2 id="install-title">
+            <span data-lang="en-US">Install the marketplace</span>
+            <span data-lang="pt-BR">Instale o marketplace</span>
+          </h2>
           <p class="section__lede">
-            Do this once per tool. After that, FreeSkills plugins appear in your
-            marketplace catalog.
+            <span data-lang="en-US">
+              Do this once per tool. After that, FreeSkills plugins appear in
+              your marketplace catalog.
+            </span>
+            <span data-lang="pt-BR">
+              Faça isso uma vez por ferramenta. Depois, os plugins do FreeSkills
+              aparecem no catálogo do marketplace.
+            </span>
           </p>
         </div>
 
-        <div class="tool-switch" role="tablist" aria-label="Choose your tool">
-          <button class="tool-switch__btn is-active" role="tab" aria-selected="true" data-tool="claude">
+        <div
+          class="tool-switch"
+          role="tablist"
+          data-i18n-aria="navPrimary"
+          aria-label="Choose your tool"
+        >
+          <button
+            class="tool-switch__btn is-active"
+            role="tab"
+            aria-selected="true"
+            data-tool="claude"
+          >
             Claude Code
           </button>
-          <button class="tool-switch__btn" role="tab" aria-selected="false" data-tool="cursor">
+          <button
+            class="tool-switch__btn"
+            role="tab"
+            aria-selected="false"
+            data-tool="cursor"
+          >
             Cursor
           </button>
-          <button class="tool-switch__btn" role="tab" aria-selected="false" data-tool="codex">
+          <button
+            class="tool-switch__btn"
+            role="tab"
+            aria-selected="false"
+            data-tool="codex"
+          >
             Codex
           </button>
         </div>
@@ -117,61 +220,174 @@
         <div class="panels">
           <article class="panel is-active" data-panel="claude" role="tabpanel">
             <h3>Claude Code</h3>
-            <p>In an interactive Claude Code session:</p>
-            <div class="copy-block" data-copy="/plugin marketplace add freeskills/marketplace">
+            <p>
+              <span data-lang="en-US"
+                >In an interactive Claude Code session:</span
+              >
+              <span data-lang="pt-BR"
+                >Em uma sessão interativa do Claude Code:</span
+              >
+            </p>
+            <div
+              class="copy-block"
+              data-copy="/plugin marketplace add freeskills/marketplace"
+            >
               <pre><code>/plugin marketplace add freeskills/marketplace</code></pre>
               <button type="button" class="copy-btn">Copy</button>
             </div>
-            <p class="panel__alt">Or via CLI:</p>
-            <div class="copy-block" data-copy="claude plugin marketplace add freeskills/marketplace">
+            <p class="panel__alt">
+              <span data-lang="en-US">Or via CLI:</span>
+              <span data-lang="pt-BR">Ou via CLI:</span>
+            </p>
+            <div
+              class="copy-block"
+              data-copy="claude plugin marketplace add freeskills/marketplace"
+            >
               <pre><code>claude plugin marketplace add freeskills/marketplace</code></pre>
               <button type="button" class="copy-btn">Copy</button>
             </div>
-            <p class="panel__hint">Confirm with <code>/plugin marketplace list</code>.</p>
+            <p class="panel__hint">
+              <span data-lang="en-US"
+                >Confirm with <code>/plugin marketplace list</code>.</span
+              >
+              <span data-lang="pt-BR"
+                >Confirme com <code>/plugin marketplace list</code>.</span
+              >
+            </p>
           </article>
 
           <article class="panel" data-panel="cursor" role="tabpanel" hidden>
             <h3>Cursor</h3>
             <ol class="steps">
-              <li>Open <a href="https://cursor.com/dashboard?tab=plugins" target="_blank" rel="noopener noreferrer">Dashboard → Plugins</a>.</li>
-              <li>Under <strong>Team Marketplaces</strong>, click <strong>Add Marketplace</strong>.</li>
-              <li>Import <code>https://github.com/freeskills/marketplace</code>.</li>
-              <li>Save, then install plugins from <strong>Customize</strong>.</li>
+              <li>
+                <span data-lang="en-US"
+                  >Open
+                  <a
+                    href="https://cursor.com/dashboard?tab=plugins"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Dashboard → Plugins</a
+                  >.</span
+                >
+                <span data-lang="pt-BR"
+                  >Abra
+                  <a
+                    href="https://cursor.com/dashboard?tab=plugins"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Dashboard → Plugins</a
+                  >.</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Under <strong>Team Marketplaces</strong>, click
+                  <strong>Add Marketplace</strong>.</span
+                >
+                <span data-lang="pt-BR"
+                  >Em <strong>Team Marketplaces</strong>, clique em
+                  <strong>Add Marketplace</strong>.</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Import
+                  <code>https://github.com/freeskills/marketplace</code>.</span
+                >
+                <span data-lang="pt-BR"
+                  >Importe
+                  <code>https://github.com/freeskills/marketplace</code>.</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Save, then install plugins from
+                  <strong>Customize</strong>.</span
+                >
+                <span data-lang="pt-BR"
+                  >Salve e instale plugins em <strong>Customize</strong>.</span
+                >
+              </li>
             </ol>
-            <p class="panel__alt">CLI (Cursor Agent):</p>
-            <div class="copy-block" data-copy="cursor-agent plugin marketplace add https://github.com/freeskills/marketplace">
+            <p class="panel__alt">
+              <span data-lang="en-US">CLI (Cursor Agent):</span>
+              <span data-lang="pt-BR">CLI (Cursor Agent):</span>
+            </p>
+            <div
+              class="copy-block"
+              data-copy="cursor-agent plugin marketplace add https://github.com/freeskills/marketplace"
+            >
               <pre><code>cursor-agent plugin marketplace add https://github.com/freeskills/marketplace</code></pre>
               <button type="button" class="copy-btn">Copy</button>
             </div>
-            <p class="panel__hint">Then use <code>/plugin</code> → Marketplace to install.</p>
+            <p class="panel__hint">
+              <span data-lang="en-US"
+                >Then use <code>/plugin</code> → Marketplace to install.</span
+              >
+              <span data-lang="pt-BR"
+                >Depois use <code>/plugin</code> → Marketplace para
+                instalar.</span
+              >
+            </p>
           </article>
 
           <article class="panel" data-panel="codex" role="tabpanel" hidden>
             <h3>Codex</h3>
-            <div class="copy-block" data-copy="codex plugin marketplace add freeskills/marketplace">
+            <div
+              class="copy-block"
+              data-copy="codex plugin marketplace add freeskills/marketplace"
+            >
               <pre><code>codex plugin marketplace add freeskills/marketplace</code></pre>
               <button type="button" class="copy-btn">Copy</button>
             </div>
-            <p class="panel__alt">Optional pin:</p>
-            <div class="copy-block" data-copy="codex plugin marketplace add freeskills/marketplace --ref main">
+            <p class="panel__alt">
+              <span data-lang="en-US">Optional pin:</span>
+              <span data-lang="pt-BR">Pin opcional:</span>
+            </p>
+            <div
+              class="copy-block"
+              data-copy="codex plugin marketplace add freeskills/marketplace --ref main"
+            >
               <pre><code>codex plugin marketplace add freeskills/marketplace --ref main</code></pre>
               <button type="button" class="copy-btn">Copy</button>
             </div>
             <p class="panel__hint">
-              In ChatGPT/Codex (Work mode), open <strong>Plugins</strong> and select the
-              <strong>FreeSkills</strong> source.
+              <span data-lang="en-US">
+                In ChatGPT/Codex (Work mode), open <strong>Plugins</strong> and
+                select the <strong>FreeSkills</strong> source.
+              </span>
+              <span data-lang="pt-BR">
+                No ChatGPT/Codex (modo Work), abra <strong>Plugins</strong> e
+                selecione a fonte <strong>FreeSkills</strong>.
+              </span>
             </p>
           </article>
         </div>
       </section>
 
-      <section class="section section--tint" id="plugins" aria-labelledby="plugins-title">
+      <section
+        class="section section--tint"
+        id="plugins"
+        aria-labelledby="plugins-title"
+      >
         <div class="section__intro">
-          <p class="eyebrow">Step 2</p>
-          <h2 id="plugins-title">Install a plugin</h2>
+          <p class="eyebrow">
+            <span data-lang="en-US">Step 2</span>
+            <span data-lang="pt-BR">Passo 2</span>
+          </p>
+          <h2 id="plugins-title">
+            <span data-lang="en-US">Install a plugin</span>
+            <span data-lang="pt-BR">Instale um plugin</span>
+          </h2>
           <p class="section__lede">
-            After the marketplace is added, install only what you need. Browse the
-            full catalog for details and commands.
+            <span data-lang="en-US">
+              After the marketplace is added, install only what you need. Browse
+              the full catalog for details and commands.
+            </span>
+            <span data-lang="pt-BR">
+              Depois que o marketplace estiver adicionado, instale só o que você
+              precisa. Veja o catálogo completo para detalhes e comandos.
+            </span>
           </p>
         </div>
 
@@ -180,15 +396,32 @@
             <p class="plugin__id">sdd</p>
             <h3>Spec-Driven Development</h3>
             <p>
-              Architecture-first engineering with living <code>.specs/</code>, ADRs,
-              and protocol commands — init, plan, start, finish, and more.
+              <span data-lang="en-US">
+                Architecture-first engineering with living <code>.specs/</code>,
+                ADRs, and protocol commands: init, plan, start, finish, and
+                more.
+              </span>
+              <span data-lang="pt-BR">
+                Engenharia com arquitetura em primeiro lugar,
+                <code>.specs/</code> vivos, ADRs e comandos de protocolo: init,
+                plan, start, finish e mais.
+              </span>
             </p>
             <ul class="plugin__tags">
-              <li>Architecture</li>
+              <li>
+                <span data-lang="en-US">Architecture</span>
+                <span data-lang="pt-BR">Arquitetura</span>
+              </li>
               <li>Specs</li>
-              <li>AI workflow</li>
+              <li>
+                <span data-lang="en-US">AI workflow</span>
+                <span data-lang="pt-BR">Fluxo com IA</span>
+              </li>
             </ul>
-            <a class="text-link" href="plugins/sdd/">View plugin details</a>
+            <a class="text-link" href="plugins/sdd/">
+              <span data-lang="en-US">View plugin details</span>
+              <span data-lang="pt-BR">Ver detalhes do plugin</span>
+            </a>
           </div>
           <div class="plugin__install">
             <p class="plugin__install-label">Claude</p>
@@ -198,32 +431,147 @@
             </div>
             <p class="plugin__install-label">Cursor</p>
             <p class="plugin__plain">
-              Customize → install plugin <strong>sdd</strong>, then run
-              <code>/sdd-init</code>, <code>/sdd-plan</code>, …
+              <span data-lang="en-US">
+                Customize → install plugin <strong>sdd</strong>, then run
+                <code>/sdd-init</code>, <code>/sdd-plan</code>, …
+              </span>
+              <span data-lang="pt-BR">
+                Customize → instale o plugin <strong>sdd</strong> e rode
+                <code>/sdd-init</code>, <code>/sdd-plan</code>, …
+              </span>
             </p>
             <p class="plugin__install-label">Codex</p>
             <p class="plugin__plain">
-              Plugins → FreeSkills → install <strong>sdd</strong>
+              <span data-lang="en-US"
+                >Plugins → FreeSkills → install <strong>sdd</strong></span
+              >
+              <span data-lang="pt-BR"
+                >Plugins → FreeSkills → instale <strong>sdd</strong></span
+              >
             </p>
-            <a class="text-link" href="plugins/">All plugins</a>
+            <a class="text-link" href="plugins/">
+              <span data-lang="en-US">All plugins</span>
+              <span data-lang="pt-BR">Todos os plugins</span>
+            </a>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="guia" aria-labelledby="guia-title">
+        <div class="section__intro">
+          <p class="eyebrow">
+            <span data-lang="en-US">Learn</span>
+            <span data-lang="pt-BR">Aprenda</span>
+          </p>
+          <h2 id="guia-title">
+            <span data-lang="en-US">Beginner's Guide</span>
+            <span data-lang="pt-BR">Guia para Iniciantes</span>
+          </h2>
+          <p class="section__lede">
+            <span data-lang="en-US">
+              New to building software with AI? Start with the beginner guide:
+              prepare the environment, then learn a practical loop. Understand,
+              plan, implement, test, and iterate.
+            </span>
+            <span data-lang="pt-BR">
+              Começando a criar software com IA? Comece pelo guia: prepare o
+              ambiente e aprenda um ciclo prático. Entender, planejar,
+              implementar, testar e evoluir.
+            </span>
+          </p>
+        </div>
+        <article class="plugin">
+          <div class="plugin__meta">
+            <p class="plugin__id">
+              <span data-lang="en-US">guide · module 1</span>
+              <span data-lang="pt-BR">guia · módulo 1</span>
+            </p>
+            <h3>
+              <span data-lang="en-US">1. Getting started</span>
+              <span data-lang="pt-BR">1. Começando</span>
+            </h3>
+            <p>
+              <span data-lang="en-US">
+                What you need, how to pick an environment, and how to work with
+                Claude without asking for “a complete system” in the first
+                prompt.
+              </span>
+              <span data-lang="pt-BR">
+                O que você precisa, como escolher o ambiente e como trabalhar
+                com o Claude sem pedir “um sistema completo” no primeiro prompt.
+              </span>
+            </p>
+            <ul class="plugin__tags">
+              <li>
+                <span data-lang="en-US">Beginners</span>
+                <span data-lang="pt-BR">Iniciantes</span>
+              </li>
+              <li>
+                <span data-lang="en-US">Environment</span>
+                <span data-lang="pt-BR">Ambiente</span>
+              </li>
+              <li>
+                <span data-lang="en-US">AI workflow</span>
+                <span data-lang="pt-BR">Fluxo com IA</span>
+              </li>
+            </ul>
+            <a class="text-link" href="guia/">
+              <span data-lang="en-US">Open the guide</span>
+              <span data-lang="pt-BR">Abrir o guia</span>
+            </a>
+          </div>
+          <div class="plugin__install">
+            <p class="plugin__install-label">
+              <span data-lang="en-US">Start here</span>
+              <span data-lang="pt-BR">Comece por aqui</span>
+            </p>
+            <p class="plugin__plain">
+              <span data-lang="en-US">
+                Each lesson has its own URL. Use it as video companion material
+                or as standalone documentation.
+              </span>
+              <span data-lang="pt-BR">
+                Cada aula tem a própria URL. Use como material dos vídeos ou
+                como documentação independente.
+              </span>
+            </p>
+            <a class="btn btn--primary" href="guia/comecando/bem-vindo/">
+              <span data-lang="en-US">Open welcome</span>
+              <span data-lang="pt-BR">Abrir o bem-vindo</span>
+            </a>
           </div>
         </article>
       </section>
 
       <section class="section" id="update" aria-labelledby="update-title">
         <div class="section__intro">
-          <p class="eyebrow">Step 3</p>
-          <h2 id="update-title">Keep everything updated</h2>
+          <p class="eyebrow">
+            <span data-lang="en-US">Step 3</span>
+            <span data-lang="pt-BR">Passo 3</span>
+          </p>
+          <h2 id="update-title">
+            <span data-lang="en-US">Keep everything updated</span>
+            <span data-lang="pt-BR">Mantenha tudo atualizado</span>
+          </h2>
           <p class="section__lede">
-            Refresh the marketplace catalog when new plugins land, then update
-            installed plugins.
+            <span data-lang="en-US">
+              Refresh the marketplace catalog when new plugins land, then update
+              installed plugins.
+            </span>
+            <span data-lang="pt-BR">
+              Atualize o catálogo do marketplace quando novos plugins chegarem e
+              depois atualize os plugins instalados.
+            </span>
           </p>
         </div>
 
         <div class="update-grid">
           <article class="update-block">
             <h3>Claude</h3>
-            <div class="copy-block" data-copy="/plugin marketplace update freeskills">
+            <div
+              class="copy-block"
+              data-copy="/plugin marketplace update freeskills"
+            >
               <pre><code>/plugin marketplace update freeskills</code></pre>
               <button type="button" class="copy-btn">Copy</button>
             </div>
@@ -235,14 +583,36 @@
           <article class="update-block">
             <h3>Cursor</h3>
             <ol class="steps">
-              <li>Open Dashboard → Plugins.</li>
-              <li>Refresh the FreeSkills marketplace (or wait for auto-refresh).</li>
-              <li>Update <strong>sdd</strong> in Customize.</li>
+              <li>
+                <span data-lang="en-US">Open Dashboard → Plugins.</span>
+                <span data-lang="pt-BR">Abra Dashboard → Plugins.</span>
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Refresh the FreeSkills marketplace (or wait for
+                  auto-refresh).</span
+                >
+                <span data-lang="pt-BR"
+                  >Atualize o marketplace FreeSkills (ou espere o
+                  auto-refresh).</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Update <strong>sdd</strong> in Customize.</span
+                >
+                <span data-lang="pt-BR"
+                  >Atualize o <strong>sdd</strong> em Customize.</span
+                >
+              </li>
             </ol>
           </article>
           <article class="update-block">
             <h3>Codex</h3>
-            <div class="copy-block" data-copy="codex plugin marketplace upgrade freeskills">
+            <div
+              class="copy-block"
+              data-copy="codex plugin marketplace upgrade freeskills"
+            >
               <pre><code>codex plugin marketplace upgrade freeskills</code></pre>
               <button type="button" class="copy-btn">Copy</button>
             </div>
@@ -256,20 +626,34 @@
 
       <section class="section section--close" aria-labelledby="close-title">
         <div class="close-panel">
-          <h2 id="close-title">Start with the marketplace</h2>
+          <h2 id="close-title">
+            <span data-lang="en-US">Start with the marketplace</span>
+            <span data-lang="pt-BR">Comece pelo marketplace</span>
+          </h2>
           <p>
-            One add. Then install SDD — or the next FreeSkills plugin — whenever you
-            need it.
+            <span data-lang="en-US">
+              One add. Then install SDD (or the next FreeSkills plugin) whenever
+              you need it.
+            </span>
+            <span data-lang="pt-BR">
+              Adicione uma vez. Depois instale o SDD (ou o próximo plugin
+              FreeSkills) quando precisar.
+            </span>
           </p>
           <div class="hero__actions">
-            <a class="btn btn--primary" href="#install">Install FreeSkills</a>
+            <a class="btn btn--primary" href="#install">
+              <span data-lang="en-US">Install FreeSkills</span>
+              <span data-lang="pt-BR">Instalar o FreeSkills</span>
+            </a>
             <a
               class="btn btn--ghost"
               href="https://github.com/freeskills/marketplace"
               target="_blank"
               rel="noopener noreferrer"
-              >View on GitHub</a
             >
+              <span data-lang="en-US">View on GitHub</span>
+              <span data-lang="pt-BR">Ver no GitHub</span>
+            </a>
           </div>
         </div>
       </section>
@@ -278,14 +662,27 @@
     <footer class="footer">
       <div class="footer__brand">FreeSkills</div>
       <p>
-        Marketplace:
-        <a href="https://github.com/freeskills/marketplace">freeskills/marketplace</a>
-        · Site:
-        <a href="https://github.com/freeskills/freeskills.github.io">freeskills.github.io</a>
+        <a href="guia/">
+          <span data-lang="en-US">Beginner's Guide</span>
+          <span data-lang="pt-BR">Guia para Iniciantes</span>
+        </a>
+        · Marketplace:
+        <a href="https://github.com/freeskills/marketplace"
+          >freeskills/marketplace</a
+        >
+        ·
+        <span data-lang="en-US">Site:</span>
+        <span data-lang="pt-BR">Site:</span>
+        <a href="https://github.com/freeskills/freeskills.github.io"
+          >freeskills.github.io</a
+        >
       </p>
     </footer>
 
-    <div class="toast" id="toast" role="status" aria-live="polite" hidden>Copied</div>
-    <script src="app.js"></script>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="i18n.js"></script>
+    <script src="app.js?v=donation-4"></script>
   </body>
 </html>

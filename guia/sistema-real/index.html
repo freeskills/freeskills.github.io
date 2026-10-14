@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3. Criando um sistema real · Guia para Iniciantes · FreeSkills</title>
+    <meta name="description" content="O site da Marina Alves deixa de ser folheto: catálogo, contato e dados que ela consegue atualizar." />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles.css" />
+  </head>
+  <body
+    class="page-guide"
+    data-guide-page="sistema-real"
+    data-i18n-page="guide-sistema-real"
+  >
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="../../plugins/">Plugins</a>
+            <a class="topnav__guide" href="../" aria-current="page">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+                    <p class="crumb">
+            <a href="../">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <span>
+              <span data-lang="en-US">3. Building a real system</span>
+              <span data-lang="pt-BR">3. Criando um sistema real</span>
+            </span>
+          </p>
+          <p class="eyebrow">
+            <span data-lang="en-US">Module 3</span>
+            <span data-lang="pt-BR">Módulo 3</span>
+          </p>
+          <h1>
+            <span data-lang="en-US">Building a real system</span>
+            <span data-lang="pt-BR">Criando um sistema real</span>
+          </h1>
+          <p class="section__lede">
+            <span data-lang="en-US">Same realtor, same folder. Now the site has to work for a visitor who wants a listing, and for Marina who wants the lead.</span>
+            <span data-lang="pt-BR">A mesma corretora, a mesma pasta. Agora o site precisa funcionar para quem quer um imóvel e para a Marina, que quer o lead.</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="guide-layout">
+          <aside class="guide-aside" data-guide-nav></aside>
+          <div class="guide-main">
+            <article class="guide-article" data-lang="pt-BR">
+              <p>
+                No módulo 2 o site da Marina Alves Corretora foi ao ar: uma landing, um domínio, um publish. Isso ainda é um folheto. Folheto não deixa o visitante abrir um imóvel, nem manda o telefone dela para o WhatsApp com contexto, nem deixa ela incluir um apto novo sem reescrever a home.
+              </p>
+              <p>
+                Aqui o mesmo projeto vira um sistema pequeno: várias páginas, um catálogo, um contato que chega, dados fora do HTML. Continua sem Skills e sem SDD. O hábito do ciclo curto não muda.
+              </p>              <h2>O que você vai aprender</h2>              <ul>
+                <li>O que falta para o site ser útil de verdade.</li>
+                <li>Lista de imóveis e uma página por imóvel.</li>
+                <li>Lead no WhatsApp, sem backend.</li>
+                <li>JSON de imóveis e republicar no mesmo domínio.</li>
+              </ul>
+              <h2>Conteúdos deste módulo</h2>
+            </article>
+            <article class="guide-article" data-lang="en-US">
+              <p>
+                In module 2 Marina Alves Corretora went live: a landing page, a domain, a publish. That is still a brochure. A brochure does not let a visitor open a listing, does not send Marina a WhatsApp with context, and does not let her add an apt without rewriting the homepage.
+              </p>
+              <p>
+                Here the same project becomes a small system: several pages, a catalog, contact that arrives, data outside the HTML. Still no Skills and no SDD. The short-cycle habit does not change.
+              </p>              <h2>What you will learn</h2>              <ul>
+                <li>What the site still needs to be actually useful.</li>
+                <li>A listing list and one page per property.</li>
+                <li>A WhatsApp lead, no backend.</li>
+                <li>Listings JSON and a republish on the same domain.</li>
+              </ul>
+              <h2>Lessons in this module</h2>
+            </article>
+                        <ol class="guide-lessons" data-guide-lessons></ol>
+            <p>
+              <a class="btn btn--primary" href="do-folheto-ao-produto/">
+                <span data-lang="en-US">Start with brochure to product</span>
+                <span data-lang="pt-BR">Começar pelo folheto ao produto</span>
+              </a>
+            </p>
+            <nav
+              class="guide-pager"
+              data-guide-pager
+              aria-label="Guide pagination"
+            ></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="./"
+          ><span data-lang="en-US">Module index</span
+          ><span data-lang="pt-BR">Índice do módulo</span></a
+        >
+        ·
+        <a href="../"
+          ><span data-lang="en-US">Beginner's Guide</span
+          ><span data-lang="pt-BR">Guia para Iniciantes</span></a
+        >
+        ·
+        <a href="../../"
+          ><span data-lang="en-US">Home</span
+          ><span data-lang="pt-BR">Início</span></a
+        >
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../../i18n.js"></script>
+    <script src="../../app.js?v=donation-4"></script>
+    <script src="../guia.js"></script>
+  </body>
+</html>

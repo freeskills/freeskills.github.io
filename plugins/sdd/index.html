@@ -1,12 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SDD — Spec-Driven Development · FreeSkills</title>
+    <title>SDD · Spec-Driven Development · FreeSkills</title>
     <meta
       name="description"
-      content="Install SDD from FreeSkills: Spec-Driven Development for Cursor, Claude Code, and Codex — living .specs/, ADRs, and protocol commands."
+      content="Install SDD from FreeSkills: Spec-Driven Development for Cursor, Claude Code, and Codex, with living .specs/, ADRs, and protocol commands."
     />
     <meta name="theme-color" content="#0f2f24" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,8 +50,11 @@
     />
     <link rel="stylesheet" href="../../styles.css" />
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body data-i18n-page="plugins-sdd">
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
 
     <header class="topbar is-solid">
       <div class="topbar__inner">
@@ -26,18 +62,33 @@
           <span class="brand-mark__dot" aria-hidden="true"></span>
           FreeSkills
         </a>
-        <nav class="topnav" aria-label="Primary">
-          <a href="../../#install">Install</a>
-          <a href="../">Plugins</a>
-          <a href="../../#update">Update</a>
-          <a
-            class="topnav__repo"
-            href="https://github.com/freeskills/marketplace"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Marketplace repo</a
-          >
-        </nav>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="../">Plugins</a>
+            <a class="topnav__guide" href="../../guia/">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
       </div>
     </header>
 
@@ -52,15 +103,31 @@
           <p class="plugin__id">sdd · v1.0.6</p>
           <h1>Spec-Driven Development</h1>
           <p class="section__lede">
-            Architecture-first engineering for AI assistants. Keep project knowledge
-            in <code>.specs/</code>, decide with ADRs, and run protocol commands from
-            init through finish.
+            <span data-lang="en-US">
+              Architecture-first engineering for AI assistants. Keep project
+              knowledge in <code>.specs/</code>, decide with ADRs, and run
+              protocol commands from init through finish.
+            </span>
+            <span data-lang="pt-BR">
+              Engenharia com arquitetura em primeiro lugar para assistentes de
+              IA. Mantenha o conhecimento do projeto em <code>.specs/</code>,
+              decida com ADRs e rode os comandos de protocolo do init ao finish.
+            </span>
           </p>
           <ul class="plugin__tags">
-            <li>Architecture</li>
+            <li>
+              <span data-lang="en-US">Architecture</span>
+              <span data-lang="pt-BR">Arquitetura</span>
+            </li>
             <li>Specs</li>
-            <li>AI workflow</li>
-            <li>Auth defaults</li>
+            <li>
+              <span data-lang="en-US">AI workflow</span>
+              <span data-lang="pt-BR">Fluxo com IA</span>
+            </li>
+            <li>
+              <span data-lang="en-US">Auth defaults</span>
+              <span data-lang="pt-BR">Padrões de auth</span>
+            </li>
           </ul>
         </div>
       </section>
@@ -68,48 +135,105 @@
       <section class="section">
         <div class="detail-grid">
           <div class="detail-main">
-            <h2>What you get</h2>
+            <h2>
+              <span data-lang="en-US">What you get</span>
+              <span data-lang="pt-BR">O que você recebe</span>
+            </h2>
             <ul class="detail-list">
-              <li>Living project knowledge: DNA, vision, architecture, modules, ADRs, tasks</li>
-              <li>Command cycle: init → new → plan → start → finish</li>
-              <li>Quality gates: status, doctor, sync, review</li>
-              <li>Opinionated defaults for modules, Inbox/Outbox, migrations</li>
               <li>
-                Auth split: app frontends use HttpOnly/Secure/SameSite cookies (or BFF);
-                direct API clients may use Bearer, API keys, mTLS, etc.
+                <span data-lang="en-US"
+                  >Living project knowledge: DNA, vision, architecture, modules,
+                  ADRs, tasks</span
+                >
+                <span data-lang="pt-BR"
+                  >Conhecimento vivo do projeto: DNA, visão, arquitetura,
+                  módulos, ADRs, tarefas</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Command cycle: init → new → plan → start → finish</span
+                >
+                <span data-lang="pt-BR"
+                  >Ciclo de comandos: init → new → plan → start → finish</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Quality gates: status, doctor, sync, review</span
+                >
+                <span data-lang="pt-BR"
+                  >Gates de qualidade: status, doctor, sync, review</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US"
+                  >Opinionated defaults for modules, Inbox/Outbox,
+                  migrations</span
+                >
+                <span data-lang="pt-BR"
+                  >Padrões opinativos para módulos, Inbox/Outbox e
+                  migrações</span
+                >
+              </li>
+              <li>
+                <span data-lang="en-US">
+                  Auth split: app frontends use HttpOnly/Secure/SameSite cookies
+                  (or BFF); direct API clients may use Bearer, API keys, mTLS,
+                  etc.
+                </span>
+                <span data-lang="pt-BR">
+                  Auth: frontends da aplicação usam cookies
+                  HttpOnly/Secure/SameSite (ou BFF); clientes de API diretos
+                  podem usar Bearer, API keys, mTLS etc.
+                </span>
               </li>
             </ul>
 
-            <h2>Commands</h2>
+            <h2>
+              <span data-lang="en-US">Commands</span>
+              <span data-lang="pt-BR">Comandos</span>
+            </h2>
             <div class="cmd-table">
               <div>
                 <h3>Claude</h3>
                 <p>
-                  <code>/sdd:init</code> · <code>/sdd:new</code> · <code>/sdd:plan</code> ·
-                  <code>/sdd:start</code> · <code>/sdd:finish</code> ·
-                  <code>/sdd:status</code> · <code>/sdd:doctor</code> ·
-                  <code>/sdd:sync</code> · <code>/sdd:review</code> ·
-                  <code>/sdd:update</code> · <code>/sdd:overview</code>
+                  <code>/sdd:init</code> · <code>/sdd:new</code> ·
+                  <code>/sdd:plan</code> · <code>/sdd:start</code> ·
+                  <code>/sdd:finish</code> · <code>/sdd:status</code> ·
+                  <code>/sdd:doctor</code> · <code>/sdd:sync</code> ·
+                  <code>/sdd:review</code> · <code>/sdd:update</code> ·
+                  <code>/sdd:overview</code>
                 </p>
               </div>
               <div>
                 <h3>Cursor</h3>
                 <p>
-                  <code>/sdd-init</code> · <code>/sdd-new</code> · <code>/sdd-plan</code> ·
-                  <code>/sdd-start</code> · <code>/sdd-finish</code> ·
-                  <code>/sdd-status</code> · <code>/sdd-doctor</code> ·
-                  <code>/sdd-sync</code> · <code>/sdd-review</code> ·
-                  <code>/sdd-update</code> · <code>/sdd-overview</code>
+                  <code>/sdd-init</code> · <code>/sdd-new</code> ·
+                  <code>/sdd-plan</code> · <code>/sdd-start</code> ·
+                  <code>/sdd-finish</code> · <code>/sdd-status</code> ·
+                  <code>/sdd-doctor</code> · <code>/sdd-sync</code> ·
+                  <code>/sdd-review</code> · <code>/sdd-update</code> ·
+                  <code>/sdd-overview</code>
                 </p>
               </div>
             </div>
           </div>
 
           <aside class="detail-aside">
-            <h2>Install</h2>
+            <h2>
+              <span data-lang="en-US">Install</span>
+              <span data-lang="pt-BR">Instalar</span>
+            </h2>
             <p class="detail-aside__note">
-              Marketplace required first:
-              <a href="../../#install">add FreeSkills</a>
+              <span data-lang="en-US"
+                >Marketplace required first:
+                <a href="../../#install">add FreeSkills</a></span
+              >
+              <span data-lang="pt-BR"
+                >Marketplace primeiro:
+                <a href="../../#install">adicione o FreeSkills</a></span
+              >
             </p>
 
             <p class="plugin__install-label">Claude</p>
@@ -120,15 +244,30 @@
 
             <p class="plugin__install-label">Cursor</p>
             <p class="plugin__plain">
-              Customize → install <strong>sdd</strong> from the FreeSkills marketplace.
+              <span data-lang="en-US"
+                >Customize → install <strong>sdd</strong> from the FreeSkills
+                marketplace.</span
+              >
+              <span data-lang="pt-BR"
+                >Customize → instale <strong>sdd</strong> no marketplace
+                FreeSkills.</span
+              >
             </p>
 
             <p class="plugin__install-label">Codex</p>
             <p class="plugin__plain">
-              Plugins → FreeSkills → install <strong>sdd</strong>
+              <span data-lang="en-US"
+                >Plugins → FreeSkills → install <strong>sdd</strong></span
+              >
+              <span data-lang="pt-BR"
+                >Plugins → FreeSkills → instale <strong>sdd</strong></span
+              >
             </p>
 
-            <p class="plugin__install-label">Update (Claude)</p>
+            <p class="plugin__install-label">
+              <span data-lang="en-US">Update (Claude)</span>
+              <span data-lang="pt-BR">Atualizar (Claude)</span>
+            </p>
             <div class="copy-block" data-copy="/plugin update sdd@freeskills">
               <pre><code>/plugin update sdd@freeskills</code></pre>
               <button type="button" class="copy-btn">Copy</button>
@@ -139,8 +278,10 @@
               href="https://github.com/freeskills/marketplace/tree/main/plugins/sdd"
               target="_blank"
               rel="noopener noreferrer"
-              >Source on GitHub</a
             >
+              <span data-lang="en-US">Source on GitHub</span>
+              <span data-lang="pt-BR">Código no GitHub</span>
+            </a>
           </aside>
         </div>
       </section>
@@ -149,15 +290,32 @@
     <footer class="footer">
       <div class="footer__brand">FreeSkills</div>
       <p>
-        <a href="../">All plugins</a>
+        <a href="../">
+          <span data-lang="en-US">All plugins</span>
+          <span data-lang="pt-BR">Todos os plugins</span>
+        </a>
         ·
-        <a href="../../">Home</a>
+        <a href="../../guia/">
+          <span data-lang="en-US">Beginner's Guide</span>
+          <span data-lang="pt-BR">Guia para Iniciantes</span>
+        </a>
         ·
-        <a href="https://github.com/freeskills/marketplace/tree/main/plugins/sdd">GitHub</a>
+        <a href="../../">
+          <span data-lang="en-US">Home</span>
+          <span data-lang="pt-BR">Início</span>
+        </a>
+        ·
+        <a
+          href="https://github.com/freeskills/marketplace/tree/main/plugins/sdd"
+          >GitHub</a
+        >
       </p>
     </footer>
 
-    <div class="toast" id="toast" role="status" aria-live="polite" hidden>Copied</div>
-    <script src="../../app.js"></script>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../../i18n.js"></script>
+    <script src="../../app.js?v=donation-4"></script>
   </body>
 </html>

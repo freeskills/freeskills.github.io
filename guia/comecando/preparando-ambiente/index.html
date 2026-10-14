@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (() => {
+        const K = "freeskills-lang";
+        const ok = (v) => v === "pt-BR" || v === "en-US";
+        let l = "en-US";
+        try {
+          const s = localStorage.getItem(K);
+          if (ok(s)) l = s;
+          else {
+            const n = [
+              ...(navigator.languages || []),
+              navigator.language,
+            ].filter(Boolean);
+            for (const x of n) {
+              if (/^pt\b/i.test(x)) {
+                l = "pt-BR";
+                break;
+              }
+              if (/^en\b/i.test(x)) {
+                l = "en-US";
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.documentElement.setAttribute("data-locale", l);
+        const st = document.createElement("style");
+        st.textContent =
+          '[data-lang]{display:none}html[data-locale="pt-BR"] [data-lang="pt-BR"],html[data-locale="en-US"] [data-lang="en-US"],html:not([data-locale]) [data-lang="en-US"]{display:revert}';
+        document.head.appendChild(st);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preparando o ambiente · Guia para Iniciantes · FreeSkills</title>
+    <meta
+      name="description"
+      content="Monte uma base simples de desenvolvimento: terminal, Git, editor, pasta de projetos e poucas ferramentas essenciais."
+    />
+    <meta name="theme-color" content="#0f2f24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../styles.css" />
+  </head>
+  <body
+    class="page-guide"
+    data-guide-page="comecando/preparando-ambiente"
+    data-i18n-page="guide-preparando"
+  >
+    <a class="skip-link" href="#main">
+      <span data-lang="en-US">Skip to content</span>
+      <span data-lang="pt-BR">Ir para o conteúdo</span>
+    </a>
+
+    <header class="topbar is-solid">
+      <div class="topbar__inner">
+        <a class="brand-mark" href="../../../" aria-label="FreeSkills home">
+          <span class="brand-mark__dot" aria-hidden="true"></span>
+          FreeSkills
+        </a>
+        <div class="topbar__end">
+          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <a href="../../../#install"
+              ><span data-lang="en-US">Install</span
+              ><span data-lang="pt-BR">Instalar</span></a
+            >
+            <a href="../../../plugins/">Plugins</a>
+            <a class="topnav__guide" href="../../" aria-current="page">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <a href="../../../#update"
+              ><span data-lang="en-US">Update</span
+              ><span data-lang="pt-BR">Atualizar</span></a
+            >
+            <a
+              class="topnav__repo"
+              href="https://github.com/freeskills/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-lang="en-US">Marketplace repo</span>
+              <span data-lang="pt-BR">Repo do marketplace</span>
+            </a>
+          </nav>
+          <div data-lang-switch></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-banner">
+        <div class="page-banner__inner">
+          <p class="crumb">
+            <a href="../../">
+              <span data-lang="en-US">Beginner's Guide</span>
+              <span data-lang="pt-BR">Guia para Iniciantes</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <a href="../">
+              <span data-lang="en-US">1. Getting started</span>
+              <span data-lang="pt-BR">1. Começando</span>
+            </a>
+            <span aria-hidden="true">/</span>
+            <span>
+              <span data-lang="en-US">Environment</span>
+              <span data-lang="pt-BR">Ambiente</span>
+            </span>
+          </p>
+          <p class="eyebrow">1.5</p>
+          <h1>
+            <span data-lang="en-US">Setting up your environment</span>
+            <span data-lang="pt-BR">Preparando o ambiente</span>
+          </h1>
+          <p class="section__lede">
+            <span data-lang="en-US"
+              >Four pieces are enough at the start: a terminal you know how to
+              open, Git installed, an editor, and a fixed place for
+              projects.</span
+            >
+            <span data-lang="pt-BR"
+              >Quatro peças bastam no começo: um terminal que você sabe abrir,
+              Git instalado, um editor e um lugar fixo para os projetos.</span
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="guide-layout">
+          <aside class="guide-aside" data-guide-nav></aside>
+          <div class="guide-main">
+            <article class="guide-article" data-lang="pt-BR">
+              <h2>Introdução</h2>
+              <p>
+                Ambiente não é uma coleção de extensões. É o conjunto mínimo que
+                permite criar um projeto, ver o que mudou, desfazer um erro e
+                pedir ajuda à IA com contexto. Quanto mais simples no início,
+                mais rápido você chega no trabalho de verdade.
+              </p>
+
+              <h2>O que você vai aprender</h2>
+              <ul>
+                <li>Para que serve o terminal no dia a dia.</li>
+                <li>Por que o Git entra cedo, mesmo em projetos sozinhos.</li>
+                <li>Como escolher um editor sem se perder em plugins.</li>
+                <li>Uma forma simples de organizar pastas.</li>
+              </ul>
+
+              <h2>Por que isso importa</h2>
+              <p>
+                Quando a IA gera ou altera arquivos, alguém precisa saber
+                <em>onde</em> isso aconteceu. O terminal mostra comandos e
+                erros. O Git mostra o histórico. O editor mostra o código. A
+                pasta do projeto é o chão comum das três coisas.
+              </p>
+
+              <h2>Terminal</h2>
+              <p>
+                Abra o terminal do seu sistema (ou o do WSL, se estiver no
+                Windows). Pratique só o básico:
+              </p>
+              <ul>
+                <li><code>pwd</code>: em que pasta você está;</li>
+                <li><code>ls</code>: o que existe nessa pasta;</li>
+                <li><code>cd</code>: entrar em outra pasta;</li>
+                <li><code>mkdir</code>: criar uma pasta.</li>
+              </ul>
+              <p>
+                Você não precisa memorizar um livro de comandos. Precisa se
+                sentir à vontade para entrar na pasta do projeto e rodar o que a
+                documentação (ou a IA) pedir, lendo a resposta na tela.
+              </p>
+
+              <h2>Git</h2>
+              <p>
+                Git registra versões do seu código. Mesmo trabalhando sozinho,
+                ele é a rede de segurança: se uma alteração da IA estragar algo,
+                você consegue ver o diff e voltar atrás.
+              </p>
+              <p>
+                Neste módulo você só precisa das ideias básicas:
+              </p>
+              <ul>
+                <li>
+                  <strong>repositório</strong>: a pasta do projeto com
+                  histórico;
+                </li>
+                <li>
+                  <strong>commit</strong>: um ponto salvo, com uma mensagem
+                  curta;
+                </li>
+                <li>
+                  <strong>diff</strong>: o que mudou desde o último ponto salvo.
+                </li>
+              </ul>
+              <p>
+                A instalação, a configuração e o primeiro commit ficam na
+                próxima página:
+                <a href="../instalando-git/">Instalando o Git</a>. Ainda não
+                precisa dominar branches, rebase ou fluxos de time.
+              </p>
+
+              <h2>Editor</h2>
+              <p>
+                Use um editor que abra a pasta inteira do projeto, não um
+                arquivo solto. Cursor é uma escolha natural se a IA vai viver ao
+                lado do código. VS Code e o fluxo do Claude Code também servem.
+              </p>
+              <p>
+                Instale o essencial do próprio editor e pare. Destaques de
+                sintaxe já vêm prontos. Extensões de formatação e de Git podem
+                esperar até o primeiro projeto pedir por elas.
+              </p>
+
+              <h2>Organização dos projetos</h2>
+              <p>
+                Crie uma pasta única e reutilize-a. Por exemplo:
+                <code>~/projetos</code> no Linux, no macOS ou no WSL. Cada
+                sistema novo vira uma subpasta:
+                <code>~/projetos/lista-tarefas</code>,
+                <code>~/projetos/meu-site</code>.
+              </p>
+              <p>
+                Evite deixar projetos na área de trabalho, em downloads ou
+                misturados com documentos pessoais. Quando você (ou a IA)
+                precisar “abrir o projeto”, o caminho deve ser óbvio.
+              </p>
+
+              <div class="guide-example">
+                <p class="guide-example__label">Exemplo de estrutura</p>
+                <div
+                  class="copy-block"
+                  data-copy="~/projetos/&#10; lista-tarefas/&#10; meu-site/&#10; experimentos/"
+                >
+                  <pre><code>~/projetos/
+ lista-tarefas/
+ meu-site/
+ experimentos/</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+                <p>
+                  Uma pasta mãe. Um diretório por ideia. Nada de dezenas de
+                  clones espalhados pelo disco.
+                </p>
+              </div>
+
+              <h2>Ferramentas básicas</h2>
+              <p>
+                Além de terminal, Git e editor, só acrescente o que o próximo
+                projeto exigir. No começo isso costuma ser:
+              </p>
+              <ul>
+                <li>um navegador atualizado, para ver interfaces web;</li>
+                <li>
+                  a runtime que o projeto pedir (por exemplo Node ou Python),
+                  quando chegar a hora;
+                </li>
+                <li>a ferramenta de IA, no próximo conteúdo.</li>
+              </ul>
+              <p>
+                Não instale “o kit completo de um time sênior” preventivamente.
+                Cada ferramenta a mais é uma coisa para atualizar, configurar e
+                esquecer.
+              </p>
+
+              <h2>Próximo passo</h2>
+              <p>
+                Com a mesa arrumada, o próximo conteúdo instala o Git de
+                verdade: conferir a versão, configurar nome e e-mail e gravar o
+                primeiro commit. Depois disso, a IA entra no ambiente.
+              </p>
+            </article>
+            <article class="guide-article" data-lang="en-US">
+              <h2>Introduction</h2>
+              <p>
+                An environment is not a pile of extensions. It is the minimum
+                set that lets you create a project, see what changed, undo a
+                mistake, and ask the AI for help with context. The simpler it is
+                at the start, the faster you get to real work.
+              </p>
+              <h2>What you will learn</h2>
+              <ul>
+                <li>What the terminal is for day to day.</li>
+                <li>Why Git belongs early, even on solo projects.</li>
+                <li>How to pick an editor without getting lost in plugins.</li>
+                <li>A simple way to organize folders.</li>
+              </ul>
+              <h2>Why this matters</h2>
+              <p>
+                When AI generates or changes files, someone needs to know
+                <em>where</em> that happened. The terminal shows commands and
+                errors. Git shows history. The editor shows the code. The
+                project folder is the common ground for all three.
+              </p>
+              <h2>Terminal</h2>
+              <p>
+                Open your system terminal (or WSL, on Windows). Practice only
+                the basics:
+              </p>
+              <ul>
+                <li><code>pwd</code>: which folder you are in;</li>
+                <li><code>ls</code>: what is in that folder;</li>
+                <li><code>cd</code>: enter another folder;</li>
+                <li><code>mkdir</code>: create a folder.</li>
+              </ul>
+              <p>
+                You don't need to memorize a book of commands. You need to feel
+                comfortable entering the project folder and running what the
+                docs (or the AI) ask, while you read the output.
+              </p>
+              <h2>Git</h2>
+              <p>
+                Git records versions of your code. Even working alone, it is the
+                safety net: if an AI change breaks something, you can see the
+                diff and go back.
+              </p>
+              <p>In this module you only need the basic ideas:</p>
+              <ul>
+                <li>
+                  <strong>repository</strong>: the project folder with history;
+                </li>
+                <li>
+                  <strong>commit</strong>: a saved point with a short message;
+                </li>
+                <li>
+                  <strong>diff</strong>: what changed since the last saved
+                  point.
+                </li>
+              </ul>
+              <p>
+                Install steps, configuration, and the first commit are on the
+                next page:
+                <a href="../instalando-git/">Installing Git</a>. You still don't
+                need branches, rebase, or team workflows.
+              </p>
+              <h2>Editor</h2>
+              <p>
+                Use an editor that opens the whole project folder, not a single
+                file. Cursor is a natural fit if AI will live next to the code.
+                VS Code and the Claude Code flow also work.
+              </p>
+              <p>
+                Install the editor's essentials and stop. Syntax highlighting is
+                already there. Formatting and Git extensions can wait until the
+                first project asks for them.
+              </p>
+              <h2>Organizing projects</h2>
+              <p>
+                Create one parent folder and reuse it. For example:
+                <code>~/projetos</code> on Linux, macOS, or WSL. Each new system
+                becomes a subfolder: <code>~/projetos/lista-tarefas</code>,
+                <code>~/projetos/meu-site</code>.
+              </p>
+              <p>
+                Avoid leaving projects on the desktop, in downloads, or mixed
+                with personal documents. When you (or the AI) need to “open the
+                project”, the path should be obvious.
+              </p>
+              <div class="guide-example">
+                <p class="guide-example__label">Example layout</p>
+                <div
+                  class="copy-block"
+                  data-copy="~/projetos/&#10; lista-tarefas/&#10; meu-site/&#10; experimentos/"
+                >
+                  <pre><code>~/projetos/
+ lista-tarefas/
+ meu-site/
+ experimentos/</code></pre>
+                  <button type="button" class="copy-btn">Copy</button>
+                </div>
+                <p>
+                  One parent folder. One directory per idea. No clones scattered
+                  across the disk.
+                </p>
+              </div>
+              <h2>Basic tools</h2>
+              <p>
+                Besides terminal, Git, and editor, add only what the next
+                project requires. At the start that is usually:
+              </p>
+              <ul>
+                <li>an up-to-date browser, to see web UIs;</li>
+                <li>
+                  the runtime the project asks for (Node or Python, for
+                  example), when the time comes;
+                </li>
+                <li>the AI tool, in the next lesson.</li>
+              </ul>
+              <p>
+                Don't install “the full senior-team kit” in advance. Each extra
+                tool is something to update, configure, and forget.
+              </p>
+              <h2>Next step</h2>
+              <p>
+                With the desk cleared, the next lesson installs Git for real:
+                check the version, set name and email, and save the first
+                commit. After that, AI joins the environment.
+              </p>
+            </article>
+            <nav
+              class="guide-pager"
+              data-guide-pager
+              aria-label="Guide pagination"
+            ></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">FreeSkills</div>
+      <p>
+        <a href="../"
+          ><span data-lang="en-US">Module index</span
+          ><span data-lang="pt-BR">Índice do módulo</span></a
+        >
+        ·
+        <a href="../../"
+          ><span data-lang="en-US">Beginner's Guide</span
+          ><span data-lang="pt-BR">Guia para Iniciantes</span></a
+        >
+        ·
+        <a href="../../../"
+          ><span data-lang="en-US">Home</span
+          ><span data-lang="pt-BR">Início</span></a
+        >
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      Copied
+    </div>
+    <script src="../../../i18n.js"></script>
+    <script src="../../../app.js?v=donation-4"></script>
+    <script src="../../guia.js"></script>
+  </body>
+</html>
