@@ -183,4 +183,52 @@
     option.addEventListener("click", () => activateOs(option.dataset.os));
   });
   if (osOptions.length) activateOs(detectOs());
+
+  const menuToggle = document.querySelector(".menu-toggle");
+  const topnav = document.querySelector(".topnav");
+  const navGroups = Array.from(document.querySelectorAll(".navgroup"));
+
+  function closeNavGroups(except) {
+    navGroups.forEach((group) => {
+      if (group === except) return;
+      group.classList.remove("is-open");
+      group.querySelector(".navgroup__caret")?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  function closeMenu() {
+    if (!menuToggle || !topnav) return;
+    topnav.classList.remove("is-open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    closeNavGroups(null);
+  }
+
+  menuToggle?.addEventListener("click", () => {
+    const open = topnav.classList.toggle("is-open");
+    menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    if (!open) closeNavGroups(null);
+  });
+
+  navGroups.forEach((group) => {
+    const caret = group.querySelector(".navgroup__caret");
+    caret?.addEventListener("click", (event) => {
+      event.preventDefault();
+      const open = !group.classList.contains("is-open");
+      closeNavGroups(group);
+      group.classList.toggle("is-open", open);
+      caret.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (topnav && !topnav.contains(event.target) && event.target !== menuToggle && !menuToggle?.contains(event.target)) {
+      closeMenu();
+    } else if (!event.target.closest(".navgroup")) {
+      closeNavGroups(null);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
+  });
 })();

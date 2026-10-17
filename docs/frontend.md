@@ -1,5 +1,25 @@
 # Frontend
 
+## Home
+
+- A home (`index.html`) é focada no Cortex: o hero reutiliza o mesmo bloco visual (`cortex-hero` / `cortex-window`) da página dedicada, com CTA primário para `cortex/#install`.
+- Abaixo do hero, uma seção condensada de recursos do Cortex (3 destaques) linka para `cortex/#features`.
+- O marketplace aparece só como **chamada** (uma seção curta com CTA "Abrir o marketplace" → `plugins/`); nenhum passo de instalação/atualização do marketplace vive na home — todo esse conteúdo mora em `plugins/index.html`.
+- A navegação do topo é: Cortex → Marketplace (`plugins/`) → Guia para Iniciantes.
+
+## Navegação do header
+
+- O header é **idêntico em todas as páginas do site** (home, Cortex, marketplace, guia): mesmos 3 itens — Cortex, Marketplace, Guia para Iniciantes — cada um um dropdown (`.navgroup`), nunca links soltos que aparecem/desaparecem por página.
+- Cada dropdown tem "Overview" como primeiro item, apontando para a raiz daquela seção, e depois os destinos internos (ex.: Cortex → Features, Install; Marketplace → Install, Catalog, Update; Guia → os 6 módulos).
+- A seção/item atual é marcado com `aria-current="page"` no botão do dropdown (e, no caso do Guia, no módulo específico).
+- No mobile (≤900px) o header mostra um botão hambúrguer (`.menu-toggle`) que abre o `.topnav` como painel vertical; os dropdowns viram acordeões dentro dele.
+- Para adicionar uma página nova a uma dessas seções, só editar o gerador de nav — não copiar/colar o header manualmente em cada arquivo.
+
+## Marketplace
+
+- `plugins/index.html` é a página dedicada do marketplace: banner, passo 1 (instalar marketplace, com `tool-switch`/`panels` por ferramenta), passo 2 (catálogo de plugins), passo 3 (atualizar), tudo em uma página só, com âncoras `#install` e `#update`.
+- Qualquer link para "instalar o marketplace" ou "atualizar" em outras páginas do site (guia, páginas de plugin) deve apontar para `plugins/#install` / `plugins/#update`, nunca para a home.
+
 ## Cortex
 
 - A página pública fica em `cortex/` e mantém o seletor de idioma pt-BR / en-US do site.

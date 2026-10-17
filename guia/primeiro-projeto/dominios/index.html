@@ -64,29 +64,11 @@
           FreeSkills
         </a>
         <div class="topbar__end">
-          <nav class="topnav" data-i18n-aria="navPrimary" aria-label="Primary">
-            <a href="../../../#install"
-              ><span data-lang="en-US">Install</span
-              ><span data-lang="pt-BR">Instalar</span></a
-            >
-            <a href="../../../plugins/">Plugins</a>
-            <a class="topnav__guide" href="../../" aria-current="page">
-              <span data-lang="en-US">Beginner's Guide</span>
-              <span data-lang="pt-BR">Guia para Iniciantes</span>
-            </a>
-            <a href="../../../#update"
-              ><span data-lang="en-US">Update</span
-              ><span data-lang="pt-BR">Atualizar</span></a
-            >
-            <a
-              class="topnav__repo"
-              href="https://github.com/freeskills/marketplace"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span data-lang="en-US">Marketplace repo</span>
-              <span data-lang="pt-BR">Repo do marketplace</span>
-            </a>
+          <button type="button" class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav"><span class="menu-toggle__bar"></span></button>
+          <nav class="topnav" id="primary-nav" data-i18n-aria="navPrimary" aria-label="Primary">
+            <div class="navgroup"><a class="navgroup__trigger" href="../../../cortex/"><span data-lang="en-US">Cortex</span><span data-lang="pt-BR">Cortex</span></a><button type="button" class="navgroup__caret" aria-haspopup="true" aria-expanded="false" aria-label="Toggle Cortex submenu"><span class="navgroup__chevron" aria-hidden="true"></span></button><div class="navgroup__menu"><a href="../../../cortex/"><span data-lang="en-US">Overview</span><span data-lang="pt-BR">Visão geral</span></a><a href="../../../cortex/#features"><span data-lang="en-US">Features</span><span data-lang="pt-BR">Recursos</span></a><a href="../../../cortex/#install"><span data-lang="en-US">Install</span><span data-lang="pt-BR">Instalar</span></a></div></div>
+            <div class="navgroup"><a class="navgroup__trigger" href="../../../plugins/"><span data-lang="en-US">Marketplace</span><span data-lang="pt-BR">Marketplace</span></a><button type="button" class="navgroup__caret" aria-haspopup="true" aria-expanded="false" aria-label="Toggle Marketplace submenu"><span class="navgroup__chevron" aria-hidden="true"></span></button><div class="navgroup__menu"><a href="../../../plugins/"><span data-lang="en-US">Overview</span><span data-lang="pt-BR">Visão geral</span></a><a href="../../../plugins/#install"><span data-lang="en-US">Install</span><span data-lang="pt-BR">Instalar</span></a><a href="../../../plugins/#catalog"><span data-lang="en-US">Catalog</span><span data-lang="pt-BR">Catálogo</span></a><a href="../../../plugins/#update"><span data-lang="en-US">Update</span><span data-lang="pt-BR">Atualizar</span></a><a href="https://github.com/freeskills/marketplace" target="_blank" rel="noopener noreferrer"><span data-lang="en-US">View on GitHub</span><span data-lang="pt-BR">Ver no GitHub</span></a></div></div>
+            <div class="navgroup"><a class="navgroup__trigger" href="../../../guia/" aria-current="page"><span data-lang="en-US">Beginner's Guide</span><span data-lang="pt-BR">Guia para Iniciantes</span></a><button type="button" class="navgroup__caret" aria-haspopup="true" aria-expanded="false" aria-label="Toggle Beginner's Guide submenu"><span class="navgroup__chevron" aria-hidden="true"></span></button><div class="navgroup__menu"><a href="../../../guia/"><span data-lang="en-US">Overview</span><span data-lang="pt-BR">Visão geral</span></a><a href="../../../guia/comecando/"><span data-lang="en-US">Getting started</span><span data-lang="pt-BR">Começando</span></a><a href="../../../guia/primeiro-projeto/" aria-current="page"><span data-lang="en-US">Our first software</span><span data-lang="pt-BR">Nosso primeiro software</span></a><a href="../../../guia/sistema-real/"><span data-lang="en-US">Building a real system</span><span data-lang="pt-BR">Criando um sistema real</span></a><a href="../../../guia/crescer/"><span data-lang="en-US">When the project grows</span><span data-lang="pt-BR">Quando o projeto cresce</span></a><a href="../../../guia/skills/"><span data-lang="en-US">Working with Skills</span><span data-lang="pt-BR">Trabalhando com Skills</span></a><a href="../../../guia/sdd/"><span data-lang="en-US">Spec-Driven Development</span><span data-lang="pt-BR">Specification Driven Development</span></a></div></div>
           </nav>
           <div data-lang-switch></div>
         </div>
@@ -437,7 +419,7 @@
       Copied
     </div>
     <script src="../../../i18n.js"></script>
-    <script src="../../../app.js?v=donation-4"></script>
+    <script src="../../../app.js?v=nav-2"></script>
     <script src="../../guia.js"></script>
   </body>
 </html>
