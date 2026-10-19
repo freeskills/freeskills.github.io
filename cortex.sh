@@ -131,6 +131,12 @@ Exec=$DEST_DIR/cortex
 Icon=$DESKTOP_ICON
 Categories=Development;
 Terminal=false
+# A janela do Cortex roda dentro do AppImage sob o processo de setup de
+# ambiente do linuxdeploy-plugin-gtk, cujo nome fixo é o WM_CLASS real que o
+# GNOME enxerga (Wails chama g_set_prgname() tarde demais pra sobrescrever
+# isso) — sem isto, a barra de apps/alt-tab cai num ícone genérico mesmo com
+# Icon= correto acima. Confirmado com xprop, 2026-10-18.
+StartupWMClass=AppRun.wrapped
 DESKTOP
       command -v update-desktop-database >/dev/null 2>&1 \
         && update-desktop-database "$DESKTOP_DIR" 2>/dev/null || true
